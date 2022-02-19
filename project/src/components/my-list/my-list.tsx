@@ -1,5 +1,6 @@
+import {Link} from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
-import FilmsList from '../mock-film-list/mock-films-list';
+import {filmsList} from '../const';
 import Footer from '../footer/footer';
 
 function MyList(): JSX.Element {
@@ -7,11 +8,11 @@ function MyList(): JSX.Element {
     <div className="user-page">
       <header className="page-header user-page__head">
         <div className="logo">
-          <a href="main.html" className="logo__link">
+          <Link to='/' title='/' className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          </Link>
         </div>
 
         <h1 className="page-title user-page__title">My list</h1>
@@ -23,7 +24,7 @@ function MyList(): JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link" href="# ">Sign out</a>
+            <Link to="/login" title="login" className="user-block__link">Sign out</Link>
           </li>
         </ul>
       </header>
@@ -33,7 +34,7 @@ function MyList(): JSX.Element {
 
         <div className="catalog__films-list">
           {
-            FilmsList.slice(0, 5).map((item) => <FilmCard key={item.filmTitle} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
+            filmsList.slice(0, 5).map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
           }
         </div>
       </section>
