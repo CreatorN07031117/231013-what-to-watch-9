@@ -1,6 +1,8 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
-import FilmsList from '../mock-film-list/mock-films-list';
+import {filmsList} from '../const';
+import Header from '../header/header';
 import Footer from '../footer/footer';
 
 function Film(): JSX.Element {
@@ -12,28 +14,7 @@ function Film(): JSX.Element {
             <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
           </div>
 
-          <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link" href="# ">Sign out</a>
-              </li>
-            </ul>
-          </header>
+          <Header />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -56,7 +37,7 @@ function Film(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to="/films/:id/review" title="review"  className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -111,7 +92,7 @@ function Film(): JSX.Element {
 
           <div className="catalog__films-list">
             {
-              FilmsList.slice(0, 3).map((item) => <FilmCard key={item.filmTitle} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
+              filmsList.slice(0, 3).map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
             }
           </div>
         </section>
