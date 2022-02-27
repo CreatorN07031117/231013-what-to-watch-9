@@ -41,7 +41,7 @@ function MyList({filmsList, onFilm}: MyListProps): JSX.Element {
 
         <div className="catalog__films-list">
           {
-            filmsList.slice().map((item) => {if(item.isFavorite){<FilmCard key={item.id} film={item} onFilm={onFilm} />;}})
+            filmsList.slice().filter((item) => item.isFavorite).map((item) => <FilmCard key={item.id} film={item} onFilm={onFilm} />)
           }
         </div>
       </section>

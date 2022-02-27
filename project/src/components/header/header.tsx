@@ -17,7 +17,7 @@ function Header(): JSX.Element {
 
         <ul className="user-block">
           <li className="user-block__item">
-            <Link to="/my-list" title="my list">
+            <Link to="/mylist" title="my list">
               <div className="user-block__avatar">
                 <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
               </div>
