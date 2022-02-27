@@ -4,9 +4,10 @@ import {Film} from '../../types/types';
 type FilmCardProps = {
   film: Film;
   onFilm: (id: number) => void;
+  onActiveFilm: (id: number) => void;
 }
 
-function FilmCard({film, onFilm}: FilmCardProps): JSX.Element {
+function FilmCard({film, onFilm, onActiveFilm}: FilmCardProps): JSX.Element {
   const id = film.id;
 
   return (
@@ -14,6 +15,7 @@ function FilmCard({film, onFilm}: FilmCardProps): JSX.Element {
       onClick={(evt) => {
         evt.preventDefault();
         onFilm(id);}}
+      onPointerOver={() => {onActiveFilm(id);}}
     >
       <div className="small-film-card__image">
         <img src={film.posterImage} alt={film.name} width="280" height="175" />
