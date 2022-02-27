@@ -1,27 +1,45 @@
 import React from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
-import {filmsList} from '../const';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import FilmOverview from '../film-overview/film-overview';
+import FilmDetail from '../film-detail/film-detail';
+import {Film, FilmsList} from '../../types/types';
 
-function Film(): JSX.Element {
+
+type FilmProps = {
+  film: Film;
+  filmsList: FilmsList;
+  onFilm: (id: number) => void;
+}
+
+function FilmPage({film, filmsList, onFilm}: FilmProps): JSX.Element {
+  const [screenView, setScreenView] = useState('Overview');
+
+  const screenSwitch = (view: string) => {
+    if(view === 'Details') {
+      return <FilmDetail film={film} />;
+    } else { return <FilmOverview film={film} />;}
+  };
+
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <Header />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -37,7 +55,7 @@ function Film(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to="/films/:id/review" title="review"  className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${film.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -46,41 +64,36 @@ function Film(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="# " className="film-nav__link">Overview</a>
+                  <li className="film-nav__item film-nav__item--active"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      setScreenView('Overview');}}
+                  >
+                    <a href="/" className="film-nav__link">Overview</a>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="# " className="film-nav__link">Details</a>
+                  <li className="film-nav__item"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      setScreenView('Details');}}
+                  >
+                    <a href="/" className="film-nav__link">Details</a>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="# " className="film-nav__link">Reviews</a>
+                  <li className="film-nav__item"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      setScreenView('Reviews');}}
+                  >
+                    <a href="/" className="film-nav__link">Reviews</a>
                   </li>
                 </ul>
               </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&#8217;s friend and protege.</p>
-
-                <p>Gustave prides himself on providing first-class service to the hotel&#8217;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&#8217;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
-
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
-              </div>
+              {screenSwitch(screenView)}
             </div>
           </div>
         </div>
@@ -92,7 +105,7 @@ function Film(): JSX.Element {
 
           <div className="catalog__films-list">
             {
-              filmsList.slice(0, 3).map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
+              filmsList.slice().filter((item) => item.genre===film.genre).map((item) => <FilmCard key={item.id} film={item} onFilm={onFilm}/>)
             }
           </div>
         </section>
@@ -101,5 +114,5 @@ function Film(): JSX.Element {
     </React.Fragment>
   );}
 
-export default Film;
+export default FilmPage;
 

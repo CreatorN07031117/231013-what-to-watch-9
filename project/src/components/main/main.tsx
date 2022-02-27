@@ -1,17 +1,19 @@
 import React from 'react';
 import FilmCard from '../film-card/film-card';
-import {filmsList} from '../const';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import {FilmsList} from '../../types/types';
 
 
 type MainScreenProps = {
   promoFilmTitle: string;
   promoFilmGenre: string;
   promoFilmYear: number;
+  filmsList: FilmsList;
+  onFilm: (id: number) => void;
 }
 
-function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear}: MainScreenProps): JSX.Element {
+function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, onFilm}: MainScreenProps): JSX.Element {
   return (
     <React.Fragment>
       <section className="film-card">
@@ -90,7 +92,7 @@ function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear}: MainScreenP
 
           <div className="catalog__films-list">
             {
-              filmsList.map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
+              filmsList.map((item) => <FilmCard key={item.id} film={item} onFilm={onFilm} />)
             }
           </div>
 

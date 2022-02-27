@@ -1,9 +1,16 @@
 import {Link} from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
-import {filmsList} from '../const';
 import Footer from '../footer/footer';
+import {FilmsList} from '../../types/types';
 
-function MyList(): JSX.Element {
+type MyListProps = {
+  filmsList: FilmsList;
+  onFilm: (id: number) => void;
+}
+
+function MyList({filmsList, onFilm}: MyListProps): JSX.Element {
+
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -34,7 +41,7 @@ function MyList(): JSX.Element {
 
         <div className="catalog__films-list">
           {
-            filmsList.slice(0, 5).map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
+            filmsList.slice().map((item) => {if(item.isFavorite){<FilmCard key={item.id} film={item} onFilm={onFilm} />;}})
           }
         </div>
       </section>
