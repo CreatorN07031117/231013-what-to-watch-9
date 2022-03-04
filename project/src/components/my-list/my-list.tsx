@@ -1,14 +1,13 @@
 import {Link} from 'react-router-dom';
-import FilmCard from '../film-card/film-card';
+import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {FilmsList} from '../../types/types';
 
 type MyListProps = {
   filmsList: FilmsList;
-  onFilm: (id: number) => void;
 }
 
-function MyList({filmsList, onFilm}: MyListProps): JSX.Element {
+function MyList({filmsList}: MyListProps): JSX.Element {
 
 
   return (
@@ -38,12 +37,7 @@ function MyList({filmsList, onFilm}: MyListProps): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-        <div className="catalog__films-list">
-          {
-            filmsList.slice().filter((item) => item.isFavorite).map((item) => <FilmCard key={item.id} film={item} onFilm={onFilm} />)
-          }
-        </div>
+        <Catalog filmsList={filmsList} />
       </section>
 
       <Footer />

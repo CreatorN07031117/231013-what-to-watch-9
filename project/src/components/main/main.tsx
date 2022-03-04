@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import Catalog from '../catalog/catalog';
+import MainCatalog from '../main-catalog/main-catalog';
 import {FilmsList} from '../../types/types';
 
 
@@ -10,10 +10,9 @@ type MainScreenProps = {
   promoFilmGenre: string;
   promoFilmYear: number;
   filmsList: FilmsList;
-  onFilm: (id: number) => void;
 }
 
-function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, onFilm}: MainScreenProps): JSX.Element {
+function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList}: MainScreenProps): JSX.Element {
   return (
     <React.Fragment>
       <section className="film-card">
@@ -55,7 +54,7 @@ function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, o
         </div>
       </section>
       <div className="page-content">
-        <Catalog filmsList={filmsList} onFilm={onFilm} />
+        <MainCatalog filmsList={filmsList} />
         <Footer />
       </div>
     </React.Fragment>

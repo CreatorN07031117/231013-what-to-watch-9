@@ -1,5 +1,4 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {useState} from 'react';
 import MainScreen from '../main/main';
 import SingIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -9,37 +8,35 @@ import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Player from '../player/player';
 import {AuthorizationStatus} from '../const';
-import {FilmsList} from '../../types/types';
+import {FilmsList, Rewiews} from '../../types/types';
 
 type AppScreenProps = {
   promoFilmTitle: string;
   promoFilmGenre: string;
   promoFilmYear: number;
   filmsList: FilmsList;
+  rewiews: Rewiews;
 }
 
-function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList}: AppScreenProps): JSX.Element {
-  const [filmId, setFilmId] = useState(0);
-
-  const filmsIdList = filmsList.slice().map((item) => item.id);
+function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, rewiews}: AppScreenProps): JSX.Element {
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/'>
-          <Route index  element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} filmsList={filmsList} onFilm={(id) => setFilmId(id)}/>} />
+          <Route index  element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} filmsList={filmsList} />} />
           <Route path='mylist'element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <MyList filmsList={filmsList} onFilm={(id) => setFilmId(id)}/>
+              <MyList filmsList={filmsList}/>
             </PrivateRoute>
           }
           />
           <Route path='login' element={<SingIn />} />
           <Route path='films/:id'>
-            <Route index element={<FilmPage film={filmsList[filmsIdList.indexOf(filmId)]} filmsList={filmsList} onFilm={(id) => setFilmId(id)}/>} />
-            <Route path='review' element={<AddRewiew film={filmsList[filmsIdList.indexOf(filmId)]}/>} />
+            <Route index element={<FilmPage filmsList={filmsList} rewiews={rewiews} />} />
+            <Route path='review' element={<AddRewiew filmsList={filmsList} />} />
           </Route>
-          <Route path='player/:id' element={<Player film={filmsList[filmsIdList.indexOf(filmId)]}/>} />
+          <Route path='player/:id' element={<Player filmsList={filmsList} />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

@@ -3,19 +3,15 @@ import {Film} from '../../types/types';
 
 type FilmCardProps = {
   film: Film;
-  onFilm: (id: number) => void;
-  onActiveFilm: (id: number) => void;
+  setFilmId : (id: number | null) => void;
 }
 
-function FilmCard({film, onFilm, onActiveFilm}: FilmCardProps): JSX.Element {
-  const id = film.id;
+function FilmCard({film, setFilmId}: FilmCardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card"
-      onClick={(evt) => {
-        evt.preventDefault();
-        onFilm(id);}}
-      onPointerOver={() => {onActiveFilm(id);}}
+      onMouseEnter={() => setFilmId(film.id)}
+      onMouseLeave={() => setFilmId(null)}
     >
       <div className="small-film-card__image">
         <img src={film.posterImage} alt={film.name} width="280" height="175" />

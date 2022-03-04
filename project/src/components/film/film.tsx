@@ -1,26 +1,30 @@
 import React from 'react';
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
-import FilmCard from '../film-card/film-card';
+import {Link, useParams} from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import Catalog from '../catalog/catalog';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
-import {Film, FilmsList} from '../../types/types';
+import FilmRewiews from '../film-reviews/film-reviews';
+import {Film, FilmsList, Rewiews} from '../../types/types';
 
 
 type FilmProps = {
-  film: Film;
   filmsList: FilmsList;
-  onFilm: (id: number) => void;
+  rewiews: Rewiews;
 }
 
-function FilmPage({film, filmsList, onFilm}: FilmProps): JSX.Element {
+function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
   const [screenView, setScreenView] = useState('Overview');
+  const params = useParams();
+  const film = filmsList.find((item) => item.id === Number(params.id)) as Film;
 
   const screenSwitch = (view: string) => {
     if(view === 'Details') {
       return <FilmDetail film={film} />;
+    } else if(view === 'Reviews'){
+      return <FilmRewiews rewiews={rewiews} />;
     } else { return <FilmOverview film={film} />;}
   };
 
@@ -102,12 +106,7 @@ function FilmPage({film, filmsList, onFilm}: FilmProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            {
-              filmsList.slice().filter((item) => item.genre===film.genre).map((item) => <FilmCard key={item.id} film={item} onFilm={onFilm}/>)
-            }
-          </div>
+          <Catalog filmsList={filmsList}/>
         </section>
         <Footer />
       </div>

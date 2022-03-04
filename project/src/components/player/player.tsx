@@ -1,10 +1,14 @@
-import {Film} from '../../types/types';
+import {FilmsList, Film} from '../../types/types';
+import {useParams} from 'react-router-dom';
 
 type PlayerProps = {
-  film: Film;
+  filmsList: FilmsList;
 }
 
-function Player({film}: PlayerProps): JSX.Element {
+function Player({filmsList}: PlayerProps): JSX.Element {
+  const params = useParams();
+  const film = filmsList.find((item) => item.id === Number(params.id)) as Film;
+
   return (
     <div className="player">
       <video src={film.videoLink} className="player__video" poster={film.previewVideoLink}></video>
