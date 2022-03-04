@@ -32,3 +32,4 @@ export type Rewiew = {
 };
 
 export type Rewiews = Rewiew[];
+

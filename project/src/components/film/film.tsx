@@ -106,5 +106,5 @@ function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
     </React.Fragment>
   );}
 
-export default FilmPage;
+export default FilmPage; 
 

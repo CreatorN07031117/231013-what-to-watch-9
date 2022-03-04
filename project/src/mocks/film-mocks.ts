@@ -179,5 +179,3 @@ export const filmsList:FilmsList = [
     released: 2016,
     isFavorite: true,
   }];
-
-

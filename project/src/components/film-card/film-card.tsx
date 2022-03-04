@@ -23,4 +23,4 @@ function FilmCard({film, setFilmId}: FilmCardProps): JSX.Element {
   );
 }
 
-export default FilmCard;
+export default FilmCard; 
