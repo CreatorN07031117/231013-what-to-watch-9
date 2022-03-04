@@ -2,7 +2,7 @@ import {FilmsList} from '../types/types';
 
 export const filmsList:FilmsList = [
   {
-    id: 1,
+    id: '1',
     name: 'The Grand Budapest Hotel',
     posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
     previewImage: 'img/the-grand-budapest-hotel.jpg',
@@ -23,7 +23,7 @@ export const filmsList:FilmsList = [
     isFavorite: false,
   },
   {
-    id: 2,
+    id: '2',
     name: 'Fantastic Beasts: The Crimes of Grindelwald',
     posterImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     previewImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
@@ -46,7 +46,7 @@ export const filmsList:FilmsList = [
     isFavorite: true,
   },
   {
-    id: 3,
+    id: '3',
     name: 'Bohemian Rhapsody',
     posterImage: 'img/bohemian-rhapsody.jpg',
     previewImage: 'img/bohemian-rhapsody.jpg',
@@ -69,7 +69,7 @@ export const filmsList:FilmsList = [
     isFavorite: false,
   },
   {
-    id: 4,
+    id: '4',
     name: 'Macbeth',
     posterImage: 'img/macbeth.jpg',
     previewImage: 'img/macbeth.jpg',
@@ -92,7 +92,7 @@ export const filmsList:FilmsList = [
     isFavorite: false,
   },
   {
-    id: 5,
+    id: '5',
     name: 'Aviator',
     posterImage: 'img/aviator.jpg',
     previewImage: 'img/aviator.jpg',
@@ -115,7 +115,7 @@ export const filmsList:FilmsList = [
     isFavorite: false,
   },
   {
-    id: 6,
+    id: '6',
     name: 'We need to talk about Kevin',
     posterImage: 'img/we-need-to-talk-about-kevin.jpg',
     previewImage: 'img/we-need-to-talk-about-kevin.jpg',
@@ -137,7 +137,7 @@ export const filmsList:FilmsList = [
     isFavorite: true,
   },
   {
-    id: 7,
+    id: '7',
     name: 'What We Do in the Shadows',
     posterImage: 'img/what-we-do-in-the-shadows.jpg',
     previewImage: 'img/what-we-do-in-the-shadows.jpg',
@@ -159,7 +159,7 @@ export const filmsList:FilmsList = [
     isFavorite: false,
   },
   {
-    id: 8,
+    id: '8',
     name: 'Johnny English',
     posterImage: 'img/johnny-english.jpg',
     previewImage: 'img/johnny-english.jpg',

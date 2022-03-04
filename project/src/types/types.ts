@@ -1,5 +1,5 @@
 export type Film = {
-  id: number;
+  id: string;
   name: string;
   posterImage: string;
   previewImage: string;
@@ -23,10 +23,10 @@ export type FilmsList = Film[];
 export type Rewiew = {
   comment: string;
   date: string;
-  id?: number;
+  id?: string;
   rating: number;
   user: {
-  id?: number;
+  id?: string;
   name: string;
   }
 };

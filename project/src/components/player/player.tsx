@@ -7,7 +7,7 @@ type PlayerProps = {
 
 function Player({filmsList}: PlayerProps): JSX.Element {
   const params = useParams();
-  const film = filmsList.find((item) => item.id === Number(params.id)) as Film;
+  const film = filmsList.find((item) => item.id === params.id) as Film;
 
   return (
     <div className="player">

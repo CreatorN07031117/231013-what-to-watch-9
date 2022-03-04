@@ -10,7 +10,7 @@ type AddRewiewProps = {
 
 function AddRewiew({filmsList}: AddRewiewProps): JSX.Element {
   const params = useParams();
-  const film: Film = filmsList.find((item) => item.id === Number(params.id)) as Film;
+  const film: Film = filmsList.find((item) => item.id === params.id) as Film;
 
   const [rewiew, setRewiew] = useState({
     rating: 0,
@@ -57,7 +57,7 @@ function AddRewiew({filmsList}: AddRewiewProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{film.name}</a>
+                <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link" href="# ">Add review</a>

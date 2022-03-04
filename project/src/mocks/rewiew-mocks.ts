@@ -2,9 +2,9 @@ import {Rewiews} from '../types/types';
 
 export const rewiews:Rewiews = [
   {
-    id: 1,
+    id: '1',
     user: {
-      id: 15,
+      id: '15',
       name: 'Kendall',
     },
     rating: 4.3,
@@ -12,9 +12,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-12T15:13:26.388Z',
   },
   {
-    id: 2,
+    id: '2',
     user: {
-      id: 18,
+      id: '18',
       name: 'Sophie',
     },
     rating: 3.8,
@@ -22,9 +22,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-13T15:13:26.388Z',
   },
   {
-    id: 3,
+    id: '3',
     user: {
-      id: 16,
+      id: '16',
       name: 'Mollie',
     },
     rating: 3.4,
@@ -32,9 +32,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-02T15:13:26.388Z',
   },
   {
-    id: 4,
+    id: '4',
     user: {
-      id: 11,
+      id: '11',
       name: 'Jack',
     },
     rating:2.9,
@@ -42,9 +42,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-01T15:13:26.388Z',
   },
   {
-    id: 5,
+    id: '5',
     user: {
-      id: 13,
+      id: '13',
       name: 'Zak',
     },
     rating: 4,
@@ -52,9 +52,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-14T15:13:26.388Z',
   },
   {
-    id: 6,
+    id: '6',
     user: {
-      id: 15,
+      id: '15',
       name: 'Kendall',
     },
     rating: 8.5,
@@ -62,9 +62,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-01T15:13:26.388Z',
   },
   {
-    id: 7,
+    id: '7',
     user: {
-      id: 11,
+      id: '11',
       name: 'Jack',
     },
     rating: 3.2,
@@ -72,9 +72,9 @@ export const rewiews:Rewiews = [
     date: '2022-02-05T15:13:26.388Z',
   },
   {
-    id: 8,
+    id: '8',
     user: {
-      id: 15,
+      id: '15',
       name: 'Woit',
     },
     rating: 7.2,

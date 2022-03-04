@@ -7,7 +7,8 @@ type CatalogProps = {
 }
 
 function Catalog ({filmsList}: CatalogProps): JSX.Element {
-  const[filmId, setFilmId] = useState<number | null> (null);
+  // eslint-disable-next-line
+  const[filmId, setFilmId] = useState <string | null> (null);
 
   return (
     <div className="catalog__films-list">

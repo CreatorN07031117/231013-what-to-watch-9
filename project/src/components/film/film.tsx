@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -7,6 +7,7 @@ import Catalog from '../catalog/catalog';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
 import FilmRewiews from '../film-reviews/film-reviews';
+import {ScreenType} from '../const';
 import {Film, FilmsList, Rewiews} from '../../types/types';
 
 
@@ -16,17 +17,23 @@ type FilmProps = {
 }
 
 function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
-  const [screenView, setScreenView] = useState('Overview');
+  const [screenView, setScreenView] = useState(ScreenType.Overview);
   const params = useParams();
-  const film = filmsList.find((item) => item.id === Number(params.id)) as Film;
+  const film = filmsList.find((item) => item.id === params.id) as Film;
+  const relativeFilms = filmsList.slice().filter((item) => item.genre===film.genre);
 
   const screenSwitch = (view: string) => {
-    if(view === 'Details') {
+    if(view === ScreenType.Details){
       return <FilmDetail film={film} />;
-    } else if(view === 'Reviews'){
+    } else if(view === ScreenType.Reviews){
       return <FilmRewiews rewiews={rewiews} />;
     } else { return <FilmOverview film={film} />;}
   };
+
+  const handleNavChange = useCallback((evt: React.MouseEvent<HTMLElement>, screen: ScreenType) => {
+    evt.preventDefault();
+    setScreenView(screen);
+  }, []);
 
   return (
     <React.Fragment>
@@ -74,27 +81,13 @@ function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      setScreenView('Overview');}}
-                  >
-                    <a href="/" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      setScreenView('Details');}}
-                  >
-                    <a href="/" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      setScreenView('Reviews');}}
-                  >
-                    <a href="/" className="film-nav__link">Reviews</a>
-                  </li>
+                  {Object.entries(ScreenType).map(([screen, title]) => (
+                    <li className={`film-nav__item ${screen === screenView && 'film-nav__item--active'}`}
+                      key={screen} onClick={(evt) => handleNavChange(evt, screen as ScreenType)}
+                    >
+                      <a href="/" className="film-nav__link">{title}</a>
+                    </li>
+                  ))}
                 </ul>
               </nav>
               {screenSwitch(screenView)}
@@ -106,7 +99,7 @@ function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <Catalog filmsList={filmsList}/>
+          <Catalog filmsList={relativeFilms}/>
         </section>
         <Footer />
       </div>

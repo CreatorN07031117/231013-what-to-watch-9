@@ -18,3 +18,9 @@ export function countLevel (rating: number): string {
     return  RATING_LEVEL[3];
   } else {return RATING_LEVEL[4];}
 }
+
+export enum ScreenType {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews'
+}

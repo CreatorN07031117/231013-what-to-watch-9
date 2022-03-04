@@ -24,8 +24,8 @@ function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, rewiews
     <BrowserRouter>
       <Routes>
         <Route path='/'>
-          <Route index  element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} filmsList={filmsList} />} />
-          <Route path='mylist'element={
+          <Route index element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} filmsList={filmsList} />} />
+          <Route path='mylist' element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
               <MyList filmsList={filmsList}/>
             </PrivateRoute>

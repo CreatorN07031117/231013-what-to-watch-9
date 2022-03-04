@@ -8,7 +8,7 @@ type MyListProps = {
 }
 
 function MyList({filmsList}: MyListProps): JSX.Element {
-
+  const myFilmsList = filmsList.slice().filter((item) => item.isFavorite === true);
 
   return (
     <div className="user-page">
@@ -37,7 +37,7 @@ function MyList({filmsList}: MyListProps): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <Catalog filmsList={filmsList} />
+        <Catalog filmsList={myFilmsList} />
       </section>
 
       <Footer />

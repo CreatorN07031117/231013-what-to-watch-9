@@ -3,7 +3,7 @@ import {Film} from '../../types/types';
 
 type FilmCardProps = {
   film: Film;
-  setFilmId : (id: number | null) => void;
+  setFilmId : (id: string | null) => void;
 }
 
 function FilmCard({film, setFilmId}: FilmCardProps): JSX.Element {
