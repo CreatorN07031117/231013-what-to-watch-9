@@ -44,4 +44,4 @@ function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, rewiews
   );
 }
 
-export default App; 
+export default App;

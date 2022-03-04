@@ -82,4 +82,3 @@ export const rewiews:Rewiews = [
     date: '2022-02-05T15:13:26.388Z',
   },
 ];
- 

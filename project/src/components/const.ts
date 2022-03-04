@@ -24,4 +24,3 @@ export enum ScreenType {
   Details = 'Details',
   Reviews = 'Reviews'
 }
- 
