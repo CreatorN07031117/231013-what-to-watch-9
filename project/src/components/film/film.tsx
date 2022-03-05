@@ -1,27 +1,56 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import FilmCard from '../film-card/film-card';
-import {filmsList} from '../const';
+import {useState, useCallback} from 'react';
+import {Link, useParams} from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import Catalog from '../catalog/catalog';
+import FilmOverview from '../film-overview/film-overview';
+import FilmDetail from '../film-detail/film-detail';
+import FilmRewiews from '../film-reviews/film-reviews';
+import {ScreenType} from '../const';
+import {Film, FilmsList, Rewiews} from '../../types/types';
 
-function Film(): JSX.Element {
+
+type FilmProps = {
+  filmsList: FilmsList;
+  rewiews: Rewiews;
+}
+
+function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
+  const [screenView, setScreenView] = useState(ScreenType.Overview);
+  const params = useParams();
+  const film = filmsList.find((item) => item.id === params.id) as Film;
+  const relativeFilms = filmsList.slice().filter((item) => item.genre===film.genre);
+
+  const screenSwitch = (view: string) => {
+    if(view === ScreenType.Details){
+      return <FilmDetail film={film} />;
+    } else if(view === ScreenType.Reviews){
+      return <FilmRewiews rewiews={rewiews} />;
+    } else { return <FilmOverview film={film} />;}
+  };
+
+  const handleNavChange = useCallback((evt: React.MouseEvent<HTMLElement>, screen: ScreenType) => {
+    evt.preventDefault();
+    setScreenView(screen);
+  }, []);
+
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <Header />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -37,7 +66,7 @@ function Film(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to="/films/:id/review" title="review"  className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${film.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -46,41 +75,22 @@ function Film(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="# " className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="# " className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="# " className="film-nav__link">Reviews</a>
-                  </li>
+                  {Object.entries(ScreenType).map(([screen, title]) => (
+                    <li className={`film-nav__item ${screen === screenView && 'film-nav__item--active'}`}
+                      key={screen} onClick={(evt) => handleNavChange(evt, screen as ScreenType)}
+                    >
+                      <a href="/" className="film-nav__link">{title}</a>
+                    </li>
+                  ))}
                 </ul>
               </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&#8217;s friend and protege.</p>
-
-                <p>Gustave prides himself on providing first-class service to the hotel&#8217;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&#8217;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
-
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
-              </div>
+              {screenSwitch(screenView)}
             </div>
           </div>
         </div>
@@ -89,17 +99,11 @@ function Film(): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
-          <div className="catalog__films-list">
-            {
-              filmsList.slice(0, 3).map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
-            }
-          </div>
+          <Catalog filmsList={relativeFilms}/>
         </section>
         <Footer />
       </div>
     </React.Fragment>
   );}
 
-export default Film;
-
+export default FilmPage;

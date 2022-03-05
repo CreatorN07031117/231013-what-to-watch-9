@@ -1,9 +1,15 @@
 import {Link} from 'react-router-dom';
-import FilmCard from '../film-card/film-card';
-import {filmsList} from '../const';
+import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
+import {FilmsList} from '../../types/types';
 
-function MyList(): JSX.Element {
+type MyListProps = {
+  filmsList: FilmsList;
+}
+
+function MyList({filmsList}: MyListProps): JSX.Element {
+  const myFilmsList = filmsList.slice().filter((item) => item.isFavorite === true);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -31,12 +37,7 @@ function MyList(): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-        <div className="catalog__films-list">
-          {
-            filmsList.slice(0, 5).map((item) => <FilmCard key={item.id} id={item.id} filmTitle={item.filmTitle} posterImage={item.posterImage} />)
-          }
-        </div>
+        <Catalog filmsList={myFilmsList} />
       </section>
 
       <Footer />

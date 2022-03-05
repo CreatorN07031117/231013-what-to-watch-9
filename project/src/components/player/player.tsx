@@ -1,7 +1,17 @@
-function Player(): JSX.Element {
+import {FilmsList, Film} from '../../types/types';
+import {useParams} from 'react-router-dom';
+
+type PlayerProps = {
+  filmsList: FilmsList;
+}
+
+function Player({filmsList}: PlayerProps): JSX.Element {
+  const params = useParams();
+  const film = filmsList.find((item) => item.id === params.id) as Film;
+
   return (
     <div className="player">
-      <video src="# " className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster={film.previewVideoLink}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
