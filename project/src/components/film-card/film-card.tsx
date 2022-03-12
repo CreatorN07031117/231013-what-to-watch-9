@@ -1,20 +1,26 @@
 import {Link} from 'react-router-dom';
 import {Film} from '../../types/types';
+import Video from '../video/video';
 
 type FilmCardProps = {
   film: Film;
+  isActive: boolean;
   setFilmId : (id: string | null) => void;
 }
 
-function FilmCard({film, setFilmId}: FilmCardProps): JSX.Element {
+function FilmCard({film, isActive, setFilmId}: FilmCardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card"
-      onMouseEnter={() => setFilmId(film.id)}
-      onMouseLeave={() => setFilmId(null)}
+      onMouseEnter={() => {
+        setFilmId(film.id);
+      }}
+      onMouseLeave={() => {
+        setFilmId(null);
+      }}
     >
       <div className="small-film-card__image">
-        <img src={film.posterImage} alt={film.name} width="280" height="175" />
+        <Video src={film.previewVideoLink} previewImage={film.previewImage} isActive={isActive} />
       </div>
       <h3 className="small-film-card__title">
         <Link to={`/films/${film.id}`} title="" className="small-film-card__link">{film.name}</Link>

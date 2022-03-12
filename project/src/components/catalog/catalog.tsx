@@ -7,13 +7,20 @@ type CatalogProps = {
 }
 
 function Catalog ({filmsList}: CatalogProps): JSX.Element {
-  // eslint-disable-next-line
-  const[filmId, setFilmId] = useState <string | null> (null);
+
+  const [filmId, setFilmId] = useState <string | null> (null);
+
+  const setActiveFilm = (id: null | string) => {
+    if (id === filmId) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="catalog__films-list">
       {
-        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId ={() => setFilmId(item.id)} />)
+        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId = {(id) => setFilmId(id)} isActive = {setActiveFilm(item.id)} />)
       }
     </div>
   );
