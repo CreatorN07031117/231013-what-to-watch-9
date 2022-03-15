@@ -1,12 +1,16 @@
 import {useState} from 'react';
 import FilmCard from '../film-card/film-card';
-import {FilmsList} from '../../types/types';
+import {useAppSelector} from '../../hooks/';
+import {ALL_FILMS} from '../const';
 
-type CatalogProps = {
-  filmsList: FilmsList;
-}
 
-function Catalog ({filmsList}: CatalogProps): JSX.Element {
+function Catalog (): JSX.Element {
+  const genre = useAppSelector((state) => state.genre);
+  let filmsList = useAppSelector((state) => state.films);
+
+  if (genre !== ALL_FILMS) {
+    filmsList = filmsList.slice().filter((item) => item.genre === genre);
+  }
 
   const [filmId, setFilmId] = useState <string | null> (null);
 

@@ -24,7 +24,7 @@ function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, rewiews
     <BrowserRouter>
       <Routes>
         <Route path='/'>
-          <Route index element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} filmsList={filmsList} />} />
+          <Route index element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} />} />
           <Route path='mylist' element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
               <MyList filmsList={filmsList}/>
@@ -33,7 +33,7 @@ function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList, rewiews
           />
           <Route path='login' element={<SingIn />} />
           <Route path='films/:id'>
-            <Route index element={<FilmPage filmsList={filmsList} rewiews={rewiews} />} />
+            <Route index element={<FilmPage rewiews={rewiews} />} />
             <Route path='review' element={<AddRewiew filmsList={filmsList} />} />
           </Route>
           <Route path='player/:id' element={<Player filmsList={filmsList} />} />

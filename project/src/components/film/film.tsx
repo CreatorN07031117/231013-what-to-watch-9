@@ -8,19 +8,26 @@ import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
 import FilmRewiews from '../film-reviews/film-reviews';
 import {ScreenType} from '../const';
-import {Film, FilmsList, Rewiews} from '../../types/types';
+import {Film, Rewiews} from '../../types/types';
+import {selectGenre, getFilmList} from '../../store/action';
+import {useAppDispatch, useAppSelector} from '../../hooks/';
 
 
 type FilmProps = {
-  filmsList: FilmsList;
   rewiews: Rewiews;
 }
 
-function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
+function FilmPage({rewiews}: FilmProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [screenView, setScreenView] = useState(ScreenType.Overview);
   const params = useParams();
+
+  const filmsList = useAppSelector((state) => state.films);
   const film = filmsList.find((item) => item.id === params.id) as Film;
-  const relativeFilms = filmsList.slice().filter((item) => item.genre===film.genre);
+  const genre = film.genre;
+
+  dispatch(selectGenre(genre));
+  dispatch(getFilmList());
 
   const screenSwitch = (view: string) => {
     if(view === ScreenType.Details){
@@ -99,7 +106,7 @@ function FilmPage({filmsList, rewiews}: FilmProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <Catalog filmsList={relativeFilms}/>
+          <Catalog />
         </section>
         <Footer />
       </div>
