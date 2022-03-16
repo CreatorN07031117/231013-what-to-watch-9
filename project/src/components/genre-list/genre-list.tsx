@@ -10,7 +10,7 @@ function GenreList (): JSX.Element {
   const filmsList = useAppSelector((state) => state.films);
 
   const genresList: string[] = [ALL_FILMS];
-  filmsList.map((item) => {
+  filmsList.forEach((item) => {
     if (!genresList.includes(item.genre)) {genresList.push(item.genre);}
   });
 

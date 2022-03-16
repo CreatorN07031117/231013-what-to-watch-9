@@ -6,9 +6,11 @@ type VideoProps = {
   src: string;
   previewImage: string;
   isActive: boolean;
+  isMuted: boolean;
+  isLoop: boolean;
 }
 
-function Video ({src, previewImage, isActive}: VideoProps): JSX.Element {
+function Video ({src, previewImage, isActive, isMuted, isLoop}: VideoProps): JSX.Element {
   const [, setIsLoading] = useState(true);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -42,7 +44,7 @@ function Video ({src, previewImage, isActive}: VideoProps): JSX.Element {
 
   return (
     <video
-      src={src} className="player__video" poster={previewImage} muted loop ref={videoRef}
+      src={src} className="player__video" poster={previewImage} muted={isMuted} loop={isLoop} ref={videoRef}
     >
     </video>
   );

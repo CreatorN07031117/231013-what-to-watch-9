@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import App from './components/app/app';
-import {filmsList} from './mocks/film-mocks';
 import {rewiews} from './mocks/rewiew-mocks';
 
 const Setting = {
@@ -15,7 +14,7 @@ const Setting = {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App promoFilmTitle={Setting.TITLE} promoFilmGenre={Setting.GENRE} promoFilmYear={Setting.YEAR} filmsList={filmsList} rewiews={rewiews}/>
+      <App promoFilmTitle={Setting.TITLE} promoFilmGenre={Setting.GENRE} promoFilmYear={Setting.YEAR} rewiews={rewiews}/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

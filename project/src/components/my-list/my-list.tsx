@@ -1,14 +1,9 @@
 import {Link} from 'react-router-dom';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-import {FilmsList} from '../../types/types';
 
-type MyListProps = {
-  filmsList: FilmsList;
-}
 
-function MyList({filmsList}: MyListProps): JSX.Element {
-  const myFilmsList = filmsList.slice().filter((item) => item.isFavorite === true);
+function MyList(): JSX.Element {
 
   return (
     <div className="user-page">
@@ -37,7 +32,7 @@ function MyList({filmsList}: MyListProps): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <Catalog filmsList={myFilmsList} />
+        <Catalog />
       </section>
 
       <Footer />
