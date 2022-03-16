@@ -10,7 +10,7 @@ function Player(): JSX.Element {
 
   return (
     <div className="player">
-      <Video src={film.previewVideoLink} previewImage={film.previewImage} isActive isMuted={false} isLoop={false}/>
+      <Video src={film.videoLink} previewImage={film.previewImage} isActive isMuted={false} isLoop={false}/>
 
       <button type="button" className="player__exit">Exit</button>
 
