@@ -4,7 +4,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-
 const RATING_LEVEL = ['Bad', 'Normal', 'Good', 'Very good', 'Awesome'];
 
 export function countLevel (rating: number): string {
@@ -24,3 +23,5 @@ export enum ScreenType {
   Details = 'Details',
   Reviews = 'Reviews'
 }
+
+export const ALL_FILMS = 'All genres';

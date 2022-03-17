@@ -1,15 +1,13 @@
 import {useState, ChangeEvent} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import RewiewContent from '../rewiew/rewiew';
-import {FilmsList, Film} from '../../types/types';
+import {Film} from '../../types/types';
+import {useAppSelector} from '../../hooks/';
 
 
-type AddRewiewProps = {
-  filmsList: FilmsList;
-}
-
-function AddRewiew({filmsList}: AddRewiewProps): JSX.Element {
+function AddRewiew(): JSX.Element {
   const params = useParams();
+  const filmsList = useAppSelector((state) => state.films);
   const film: Film = filmsList.find((item) => item.id === params.id) as Film;
 
   const [rewiew, setRewiew] = useState({

@@ -2,17 +2,15 @@ import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import MainCatalog from '../main-catalog/main-catalog';
-import {FilmsList} from '../../types/types';
 
 
 type MainScreenProps = {
   promoFilmTitle: string;
   promoFilmGenre: string;
   promoFilmYear: number;
-  filmsList: FilmsList;
 }
 
-function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList}: MainScreenProps): JSX.Element {
+function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear}: MainScreenProps): JSX.Element {
   return (
     <React.Fragment>
       <section className="film-card">
@@ -54,7 +52,7 @@ function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear, filmsList}: 
         </div>
       </section>
       <div className="page-content">
-        <MainCatalog filmsList={filmsList} />
+        <MainCatalog />
         <Footer />
       </div>
     </React.Fragment>

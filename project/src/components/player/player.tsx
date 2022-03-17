@@ -1,17 +1,16 @@
-import {FilmsList, Film} from '../../types/types';
 import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/';
+import {Film} from '../../types/types';
+import Video from '../video/video';
 
-type PlayerProps = {
-  filmsList: FilmsList;
-}
-
-function Player({filmsList}: PlayerProps): JSX.Element {
+function Player(): JSX.Element {
   const params = useParams();
+  const filmsList = useAppSelector((state) => state.films);
   const film = filmsList.find((item) => item.id === params.id) as Film;
 
   return (
     <div className="player">
-      <video src={film.videoLink} className="player__video" poster={film.previewVideoLink}></video>
+      <Video src={film.videoLink} previewImage={film.previewImage} isActive isMuted={false} isLoop={false}/>
 
       <button type="button" className="player__exit">Exit</button>
 
