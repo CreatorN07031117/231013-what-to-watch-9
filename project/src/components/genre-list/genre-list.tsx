@@ -1,6 +1,6 @@
 import {selectGenre, getFilmList} from '../../store/action';
 import {useAppDispatch, useAppSelector} from '../../hooks/';
-import {ALL_FILMS} from '../const';
+import {ALL_FILMS, MAX_GENRES} from '../const';
 
 
 function GenreList (): JSX.Element {
@@ -9,10 +9,11 @@ function GenreList (): JSX.Element {
   const genre = useAppSelector((state) => state.genre);
   const filmsList = useAppSelector((state) => state.films);
 
-  const genresList: string[] = [ALL_FILMS];
-  filmsList.forEach((item) => {
-    if (!genresList.includes(item.genre)) {genresList.push(item.genre);}
-  });
+  const genresSet = new Set<string>([ALL_FILMS]);
+  filmsList.forEach((item) => genresSet.add(item.genre));
+  let genresList: string[] = [...genresSet];
+
+  genresList = genresList.slice(0, MAX_GENRES);
 
   return (
     <ul className="catalog__genres-list">
@@ -21,7 +22,8 @@ function GenreList (): JSX.Element {
           key={item}
           onClick={() => {
             dispatch(selectGenre(item));
-            dispatch(getFilmList());}}
+            dispatch(getFilmList());
+          }}
         >
           <a href="# " className="catalog__genres-link">{item}</a>
         </li>

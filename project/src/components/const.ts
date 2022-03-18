@@ -25,3 +25,9 @@ export enum ScreenType {
 }
 
 export const ALL_FILMS = 'All genres';
+
+export const FILMS_PER_LOAD = 4;
+
+export const SIMILAR_FILMS = 4;
+
+export const MAX_GENRES = 9;
