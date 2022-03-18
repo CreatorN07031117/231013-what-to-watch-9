@@ -1,16 +1,17 @@
-type ShowMoreBtnProps = {
-  setCount: () => void;
-}
+import {showMoreFilms} from '../../store/action';
+import {useAppDispatch} from '../../hooks/';
 
 
-function ShowMoreBtn ({setCount}: ShowMoreBtnProps): JSX.Element {
+function ShowMoreBtn (): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="catalog__more">
       <button
         className="catalog__button"
         type="button"
         onClick={() =>
-          setCount()}
+          dispatch(showMoreFilms())}
       >
         Show more
       </button>
