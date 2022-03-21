@@ -8,7 +8,7 @@ import {useAppSelector} from '../../hooks/';
 function AddRewiew(): JSX.Element {
   const params = useParams();
   const filmsList = useAppSelector((state) => state.films);
-  const film: Film = filmsList.find((item) => item.id === params.id) as Film;
+  const film: Film = filmsList.find((item) => item.id.toString()  === params.id) as Film;
 
   const [rewiew, setRewiew] = useState({
     rating: 0,
