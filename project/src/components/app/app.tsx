@@ -7,8 +7,10 @@ import AddRewiew from '../add-rewiew/add-rewiew';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Player from '../player/player';
+import Preloader from '../preloader/preloader';
 import {AuthorizationStatus} from '../const';
 import {Rewiews} from '../../types/types';
+import {useAppSelector} from '../../hooks/index';
 
 
 type AppScreenProps = {
@@ -19,6 +21,14 @@ type AppScreenProps = {
 }
 
 function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, rewiews}: AppScreenProps): JSX.Element {
+
+  const {isDataLoaded} = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return (
+      <Preloader />
+    );
+  }
 
   return (
     <BrowserRouter>
