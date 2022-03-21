@@ -1421,6 +1421,7 @@ main {
   position: relative;
   width: 50%;
   display: grid;
+  margin-top: 100px;
   place-items: center;
 }
 
