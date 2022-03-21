@@ -13,7 +13,7 @@ function FilmCard({film, isActive, setFilmId}: FilmCardProps): JSX.Element {
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter={() => {
-        setFilmId(film.id);
+        setFilmId(film.id.toString());
       }}
       onMouseLeave={() => {
         setFilmId(null);

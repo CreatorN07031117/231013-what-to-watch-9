@@ -6,7 +6,7 @@ import Video from '../video/video';
 function Player(): JSX.Element {
   const params = useParams();
   const filmsList = useAppSelector((state) => state.films);
-  const film = filmsList.find((item) => item.id === params.id) as Film;
+  const film = filmsList.find((item) => item.id.toString() === params.id) as Film;
 
   return (
     <div className="player">

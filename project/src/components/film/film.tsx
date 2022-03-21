@@ -21,7 +21,8 @@ function FilmPage({rewiews}: FilmProps): JSX.Element {
   const params = useParams();
 
   let filmsList = useAppSelector((state) => state.films);
-  const film = filmsList.find((item) => item.id === params.id) as Film;
+
+  const film = filmsList.find((item) => item.id.toString() === params.id) as Film;
 
   filmsList = filmsList.slice().filter((item) => item.genre === film.genre);
 

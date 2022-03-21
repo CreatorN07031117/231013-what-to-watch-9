@@ -9,9 +9,9 @@ type CatalogProps = {
 
 function Catalog ({filmsList}: CatalogProps): JSX.Element {
 
-  const [filmId, setFilmId] = useState <string | null> (null);
+  const [filmId, setFilmId] = useState <null | string> (null);
 
-  const setActiveFilm = (id: null | string) => {
+  const setActiveFilm = (id: string | null ) => {
     if (id === filmId) {
       return true;
     }
@@ -21,7 +21,7 @@ function Catalog ({filmsList}: CatalogProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {
-        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId = {(id) => setFilmId(id)} isActive = {setActiveFilm(item.id)} />)
+        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId = {(id) => setFilmId(id)} isActive = {setActiveFilm(item.id.toString())} />)
       }
     </div>
   );
