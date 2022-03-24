@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import App from './components/app/app';
+import ErrorMessage from './components/error-message/error-message';
 import {rewiews} from './mocks/rewiew-mocks';
-import {fetchFilmsAction} from './store/api-actions';
+import {fetchFilmsAction, checkAuthAction} from '../src/store/api-actions';
 
 
 const Setting = {
@@ -14,10 +15,12 @@ const Setting = {
 };
 
 store.dispatch(fetchFilmsAction());
+store.dispatch(checkAuthAction());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
+      <ErrorMessage />
       <App promoFilmTitle={Setting.TITLE} promoFilmGenre={Setting.GENRE} promoFilmYear={Setting.YEAR} rewiews={rewiews}/>
     </Provider>
   </React.StrictMode>,

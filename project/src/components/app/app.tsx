@@ -22,9 +22,11 @@ type AppScreenProps = {
 
 function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, rewiews}: AppScreenProps): JSX.Element {
 
-  const {isDataLoaded} = useAppSelector((state) => state);
+  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const isCheckedAuth = (authStatus: AuthorizationStatus): boolean =>
+    authStatus === AuthorizationStatus.Unknown;
 
-  if (!isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <Preloader />
     );
@@ -36,7 +38,7 @@ function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, rewiews}: AppScree
         <Route path='/'>
           <Route index element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} />} />
           <Route path='mylist' element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <MyList />
             </PrivateRoute>
           }
