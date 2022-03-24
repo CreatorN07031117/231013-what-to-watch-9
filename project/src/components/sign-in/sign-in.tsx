@@ -26,6 +26,7 @@ function SingIn (): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      navigate('/');
     }
   };
 
@@ -75,9 +76,8 @@ function SingIn (): JSX.Element {
           </div>
           <div className="sign-in__submit">
             <button
-              onClick={() => navigate('/mylist')}
               className="sign-in__btn"
-              type="button"
+              type="submit"
             >
               Sign in
             </button>

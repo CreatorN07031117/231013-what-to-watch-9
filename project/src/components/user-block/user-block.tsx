@@ -4,7 +4,6 @@ import {useAppSelector} from '../../hooks/index';
 
 function UserBlock (props):JSX.Element {
 
-  const {authorizationStatus} = useAppSelector((state) => state);
 
   return (
     <React.Fragment>
