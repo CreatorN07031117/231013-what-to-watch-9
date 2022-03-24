@@ -75,7 +75,11 @@ export const clearErrorAction = createAsyncThunk(
 export const fetchPromo = createAsyncThunk(
   'data/fetchPromo',
   async () => {
-    const {data} = await api.get<Film>(APIRoute.Promo);
-    store.dispatch(loadPromo(data));
+    try {
+      const {data} = await api.get<Film>(APIRoute.Promo);
+      store.dispatch(loadPromo(data));
+    } catch (error) {
+      errorHandle (error);
+    }
   },
 );
