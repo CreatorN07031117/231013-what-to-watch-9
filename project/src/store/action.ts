@@ -1,5 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
-import {FilmsList} from '../types/types';
+import {FilmsList, Film} from '../types/types';
 import {AuthorizationStatus} from '../components/const';
 
 
@@ -14,3 +14,7 @@ export const loadFilms = createAction<FilmsList>('data/loadFilms');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const setError = createAction<string>('setError');
+
+export const getPromo = createAction('getPromo');
+
+export const loadPromo = createAction<Film>('data/loadPromo');

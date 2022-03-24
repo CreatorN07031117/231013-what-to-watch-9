@@ -1,8 +1,8 @@
 /* eslint-disable no-self-assign */
 import {createReducer} from '@reduxjs/toolkit';
-import {selectGenre, getFilmList, showMoreFilms, loadFilms, requireAuthorization, setError} from './action';
+import {selectGenre, getFilmList, showMoreFilms, loadFilms, requireAuthorization, setError, loadPromo, getPromo} from './action';
 import {ALL_FILMS, FILMS_PER_LOAD, AuthorizationStatus} from '../components/const';
-import {FilmsList} from '../types/types';
+import {FilmsList, Film} from '../types/types';
 
 const initialState = {
   genre: ALL_FILMS,
@@ -11,6 +11,7 @@ const initialState = {
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: '',
+  promo: {} as Film,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -34,6 +35,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(getPromo, (state) => {
+      state.promo = state.promo;
+    })
+    .addCase(loadPromo, (state, action) => {
+      state.promo = action.payload;
     });
 });
 

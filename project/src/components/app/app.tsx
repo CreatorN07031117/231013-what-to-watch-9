@@ -14,13 +14,10 @@ import {useAppSelector} from '../../hooks/index';
 
 
 type AppScreenProps = {
-  promoFilmTitle: string;
-  promoFilmGenre: string;
-  promoFilmYear: number;
   rewiews: Rewiews;
 }
 
-function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, rewiews}: AppScreenProps): JSX.Element {
+function App ({rewiews}: AppScreenProps): JSX.Element {
 
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
   const isCheckedAuth = (authStatus: AuthorizationStatus): boolean =>
@@ -36,7 +33,7 @@ function App ({promoFilmTitle, promoFilmGenre, promoFilmYear, rewiews}: AppScree
     <BrowserRouter>
       <Routes>
         <Route path='/'>
-          <Route index element={<MainScreen promoFilmTitle={promoFilmTitle} promoFilmGenre={promoFilmGenre} promoFilmYear={promoFilmYear} />} />
+          <Route index element={<MainScreen  />} />
           <Route path='mylist' element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
               <MyList />
