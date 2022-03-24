@@ -1,8 +1,7 @@
 import React from 'react';
-import {useAppSelector} from '../../hooks/index';
 
 
-function UserBlock (props):JSX.Element {
+function UserBlock (props: {render(): JSX.Element}):JSX.Element {
 
 
   return (
