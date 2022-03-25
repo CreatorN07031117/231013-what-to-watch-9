@@ -11,17 +11,12 @@ function Catalog ({filmsList}: CatalogProps): JSX.Element {
 
   const [filmId, setFilmId] = useState <null | string> (null);
 
-  const setActiveFilm = (id: string | null ) => {
-    if (id === filmId) {
-      return true;
-    }
-    return false;
-  };
+  const checkIsActive = (id: string | null ): boolean => id === filmId;
 
   return (
     <div className="catalog__films-list">
       {
-        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId = {(id) => setFilmId(id)} isActive = {setActiveFilm(item.id.toString())} />)
+        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId = {(id) => setFilmId(id)} isActive = {checkIsActive(item.id.toString())} />)
       }
     </div>
   );

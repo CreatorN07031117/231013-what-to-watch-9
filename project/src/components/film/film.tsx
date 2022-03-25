@@ -42,7 +42,7 @@ function FilmPage({rewiews}: FilmProps): JSX.Element {
 
   return (
     <React.Fragment>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{backgroundColor: film.backgroundColor}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.backgroundImage} alt={film.name} />

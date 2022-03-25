@@ -2,20 +2,18 @@ import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import MainCatalog from '../main-catalog/main-catalog';
+import {useAppSelector} from '../../hooks/index';
 
 
-type MainScreenProps = {
-  promoFilmTitle: string;
-  promoFilmGenre: string;
-  promoFilmYear: number;
-}
+function MainScreen(): JSX.Element {
 
-function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear}: MainScreenProps): JSX.Element {
+  const {promo} = useAppSelector((state) => state);
+
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={promo.backgroundImage} alt={promo.name} style={{backgroundColor: promo.backgroundColor}}/>
         </div>
 
         <Header />
@@ -23,14 +21,14 @@ function MainScreen({promoFilmTitle, promoFilmGenre, promoFilmYear}: MainScreenP
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={promo.posterImage} alt={promo.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilmTitle}</h2>
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilmGenre}</span>
-                <span className="film-card__year">{promoFilmYear}</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.released}</span>
               </p>
 
               <div className="film-card__buttons">

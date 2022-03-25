@@ -1,7 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import UserBlock from '../user-block/user-block';
+import AuthUserBlock from '../auth-user-block/auth-user-block';
+import NoAuthUserBlock from '../noauth-user-block/noauth-user-block';
+import {AuthorizationStatus} from '../const';
+import {useAppSelector} from '../../hooks/index';
+
 
 function Header(): JSX.Element {
+
+  const {authorizationStatus} = useAppSelector((state) => state);
+
   return (
     <React.Fragment>
       <h1 className="visually-hidden">WTW</h1>
@@ -15,18 +24,12 @@ function Header(): JSX.Element {
           </Link>
         </div>
 
-        <ul className="user-block">
-          <li className="user-block__item">
-            <Link to="/mylist" title="my list">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </Link>
-          </li>
-          <li className="user-block__item">
-            <Link to="/login" title="login" className="user-block__link">Sign out</Link>
-          </li>
-        </ul>
+        <UserBlock render={
+          () => (
+            authorizationStatus === AuthorizationStatus.Auth? <AuthUserBlock /> : <NoAuthUserBlock />
+          )
+        }
+        />
       </header>
     </React.Fragment>
   );
