@@ -6,6 +6,7 @@ function NoAuthUserBlock (): JSX.Element {
   return (
     <ul className="user-block">
       <li className="user-block__item">
+        <img src='img/placeholder3000.png' alt='' width="63" height="63" />
       </li>
       <li className="user-block__item">
         <Link

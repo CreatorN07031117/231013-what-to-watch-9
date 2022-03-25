@@ -1,18 +1,19 @@
 import {logoutAction} from '../../store/api-actions';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Link} from 'react-router-dom';
 
 
 function AuthUserBlock (): JSX.Element {
 
   const dispatch = useAppDispatch();
+  const {userData} = useAppSelector((state) => state);
 
   return (
     <ul className="user-block">
       <li className="user-block__item">
         <Link to="/mylist" title="my list">
           <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            <img src={userData.avatarUrl} alt={userData.name} width="63" height="63" />
           </div>
         </Link>
       </li>

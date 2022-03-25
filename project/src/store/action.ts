@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {FilmsList, Film} from '../types/types';
 import {AuthorizationStatus} from '../components/const';
+import {UserData} from '../types/user-data';
 
 
 export const selectGenre = createAction('catalog/selectGenre', (genre) => ({payload: genre}));
@@ -18,3 +19,7 @@ export const setError = createAction<string>('setError');
 export const getPromo = createAction('getPromo');
 
 export const loadPromo = createAction<Film>('data/loadPromo');
+
+export const getUserData = createAction('getUserData');
+
+export const loadUserData = createAction<UserData>('data/loadUserData');
