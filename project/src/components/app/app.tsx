@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import MainScreen from '../main/main';
 import SingIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -10,8 +10,6 @@ import Player from '../player/player';
 import Preloader from '../preloader/preloader';
 import {AuthorizationStatus} from '../const';
 import {useAppSelector} from '../../hooks/index';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
 
 
 function App (): JSX.Element {
@@ -27,7 +25,7 @@ function App (): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter>
       <Routes>
         <Route path='/'>
           <Route index element={<MainScreen  />} />
@@ -51,7 +49,7 @@ function App (): JSX.Element {
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
 
