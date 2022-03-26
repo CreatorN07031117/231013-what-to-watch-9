@@ -102,7 +102,7 @@ export const fetchFilmActive = createAsyncThunk(
       const {data} = await api.get(`/films/${id}`);
       store.dispatch(loadFilmActive(data));
     } catch (error) {
-      errorHandle (error);
+      store.dispatch(redirectToRoute('*'));
     }
   },
 );
