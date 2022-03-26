@@ -9,15 +9,10 @@ import PrivateRoute from '../private-route/private-route';
 import Player from '../player/player';
 import Preloader from '../preloader/preloader';
 import {AuthorizationStatus} from '../const';
-import {Rewiews} from '../../types/types';
 import {useAppSelector} from '../../hooks/index';
 
 
-type AppScreenProps = {
-  rewiews: Rewiews;
-}
-
-function App ({rewiews}: AppScreenProps): JSX.Element {
+function App (): JSX.Element {
 
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
   const isCheckedAuth = (authStatus: AuthorizationStatus): boolean =>
@@ -42,8 +37,13 @@ function App ({rewiews}: AppScreenProps): JSX.Element {
           />
           <Route path='login' element={<SingIn />} />
           <Route path='films/:id'>
-            <Route index element={<FilmPage rewiews={rewiews} />} />
-            <Route path='review' element={<AddRewiew />} />
+            <Route index element={<FilmPage />} />
+            <Route path='review' element={
+              <PrivateRoute authorizationStatus={authorizationStatus}>
+                <AddRewiew />
+              </PrivateRoute>
+            }
+            />
           </Route>
           <Route path='player/:id' element={<Player />} />
         </Route>

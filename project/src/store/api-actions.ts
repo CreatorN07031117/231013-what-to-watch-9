@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
-import {FilmsList, Film} from '../types/types';
+import {FilmsList, Film, NewRewiew} from '../types/types';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../components/const';
-import {loadFilms, requireAuthorization, setError, loadPromo, loadUserData} from './action';
+import {loadFilms, requireAuthorization, setError, loadPromo, loadUserData, loadFilmActive, loadRewiews, loadSimilarFilms} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
@@ -50,6 +50,14 @@ export const loginAction = createAsyncThunk(
   },
 );
 
+export const addRewiew = createAsyncThunk(
+  'data/addRewiew',
+  async ({id, comment, rating}: NewRewiew) => {
+    await api.post(`/comments/${id}`, {comment, rating});
+  },
+);
+
+
 export const logoutAction = createAsyncThunk(
   'user/logout',
   async () => {
@@ -84,5 +92,33 @@ export const fetchPromo = createAsyncThunk(
     } catch (error) {
       errorHandle (error);
     }
+  },
+);
+
+export const fetchFilmActive = createAsyncThunk(
+  'data/fetchFilmActive',
+  async (id: string) => {
+    try {
+      const {data} = await api.get(`/films/${id}`);
+      store.dispatch(loadFilmActive(data));
+    } catch (error) {
+      errorHandle (error);
+    }
+  },
+);
+
+export const fetchRewiews = createAsyncThunk(
+  'data/fetchRewiews',
+  async (id: string) => {
+    const {data} = await api.get(`/comments/${id}`);
+    store.dispatch(loadRewiews(data));
+  },
+);
+
+export const fetchSimilarFilms = createAsyncThunk(
+  'data/fetchSimilarFilms',
+  async (id: string) => {
+    const {data} = await api.get(`/films/${id}/similar`);
+    store.dispatch(loadSimilarFilms(data));
   },
 );

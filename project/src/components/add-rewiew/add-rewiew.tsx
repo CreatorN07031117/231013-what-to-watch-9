@@ -1,14 +1,17 @@
 import {useState, ChangeEvent} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import RewiewContent from '../rewiew/rewiew';
-import {Film} from '../../types/types';
+import {NewRewiew} from '../../types/types';
+import {addRewiew} from '../../store/api-actions';
 import {useAppSelector} from '../../hooks/';
+import AuthUserBlock from '../auth-user-block/auth-user-block';
+import {useAppDispatch} from '../../hooks';
 
 
 function AddRewiew(): JSX.Element {
-  const params = useParams();
-  const filmsList = useAppSelector((state) => state.films);
-  const film: Film = filmsList.find((item) => item.id.toString()  === params.id) as Film;
+  const {filmActive} = useAppSelector((store) => store);
+
+  const dispatch = useAppDispatch();
 
   const [rewiew, setRewiew] = useState({
     rating: 0,
@@ -33,12 +36,15 @@ function AddRewiew(): JSX.Element {
     </div>
   );
 
+  const onSubmitRewiew = (newRewiew: NewRewiew) => {
+    dispatch(addRewiew(newRewiew));
+  };
 
   return (
-    <section className="film-card film-card--full">
+    <section className="film-card film-card--full" style={{backgroundColor: filmActive.backgroundColor}}>
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.backgroundImage} alt={film.name} />
+          <img src={filmActive.backgroundImage} alt={filmActive.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -55,7 +61,7 @@ function AddRewiew(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${film.id}`} className="breadcrumbs__link">{film.name}</Link>
+                <Link to={`/films/${filmActive.id}`} className="breadcrumbs__link">{filmActive.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link" href="# ">Add review</a>
@@ -63,29 +69,26 @@ function AddRewiew(): JSX.Element {
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href="# ">Sign out</a>
-            </li>
-          </ul>
+          <AuthUserBlock />
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film.posterImage} alt={film.name} width="218" height="327" />
+          <img src={filmActive.posterImage} alt={filmActive.name} width="218" height="327" />
         </div>
       </div>
 
       <div className="add-review">
         {newComment ?  newCommentContent() : null}
-        <form action="#" className={newComment ? 'visually-hidden' : 'add-review__form'}
+        <form action="#"
+          className={newComment ? 'visually-hidden' : 'add-review__form'}
           onSubmit={(evt) => {
             evt.preventDefault();
             setNewComment(true);
+            onSubmitRewiew({
+              id: filmActive.id,
+              comment: rewiew.comment,
+              rating: rewiew.rating,
+            });
           }}
         >
           <div className="rating">
@@ -122,7 +125,7 @@ function AddRewiew(): JSX.Element {
             </div>
           </div>
 
-          <div className="add-review__text">
+          <div className="add-review__text" style={{backgroundColor: 'rgba(255,255,255,0.4'}}>
             <textarea className="add-review__textarea" name="comment" id="comment" onChange={formChangeHandle} value={rewiew.comment}></textarea>
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>

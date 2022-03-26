@@ -11,11 +11,11 @@ function FilmRewiews ({rewiews}: FilmRewiewsProps): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {rewiews.slice(0, rewiewsPart).map((item) => <RewiewContent rewiew={item} key={item.id}/>)}
+        {rewiews.slice(rewiewsPart).map((item) => <RewiewContent rewiew={item} key={item.id} />)}
       </div>
 
       <div className="film-card__reviews-col">
-        {rewiews.slice(rewiewsPart).map((item) => <RewiewContent rewiew={item} key={item.id} />)}
+        {rewiews.slice(0, rewiewsPart).map((item) => <RewiewContent rewiew={item} key={item.id}/>)}
       </div>
     </div>
   );
