@@ -1,14 +1,15 @@
 import React from 'react';
 import {useState, useCallback, useEffect} from 'react';
-import {Link, useParams, useNavigate} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import Catalog from '../catalog/catalog';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
 import FilmRewiews from '../film-reviews/film-reviews';
-import {ScreenType, SIMILAR_FILMS, AuthorizationStatus} from '../const';
+import {ScreenType, SIMILAR_FILMS} from '../const';
 import {useAppSelector} from '../../hooks/';
+import Buttons from '../buttons/buttons';
 import {fetchFilmActive, fetchRewiews, fetchSimilarFilms} from '../../store/api-actions';
 import {store} from '../../store';
 
@@ -23,7 +24,7 @@ function FilmPage(): JSX.Element {
     store.dispatch(fetchSimilarFilms(params.id as string));
   }, [params.id]);
 
-  const {authorizationStatus, filmActive, rewiews, similarFilms} = useAppSelector((state) => state);
+  const {filmActive, rewiews, similarFilms} = useAppSelector((state) => state);
 
   const screenSwitch = (view: string) => {
     if(view === ScreenType.Details){
@@ -38,13 +39,6 @@ function FilmPage(): JSX.Element {
     setScreenView(screen);
   }, []);
 
-  const navigate = useNavigate();
-
-  const handleMyList = useCallback(() => {
-    if(authorizationStatus !== AuthorizationStatus.Auth) {
-      navigate('/login');
-    }
-  }, []);
 
   return (
     <React.Fragment>
@@ -65,22 +59,7 @@ function FilmPage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                  onClick={() => handleMyList()}
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <Buttons />
                 <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
               </div>
             </div>

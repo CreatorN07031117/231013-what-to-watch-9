@@ -31,3 +31,5 @@ export const loadRewiews = createAction<Rewiews>('data/loadRewiews');
 export const loadSimilarFilms = createAction<FilmsList>('data/loadSimilarFilms');
 
 export const sendRewiew = createAction('data/sendRewiew');
+
+export const redirectToRoute = createAction<string>('redirectToRoute');

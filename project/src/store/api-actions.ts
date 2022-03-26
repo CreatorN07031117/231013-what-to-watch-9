@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
 import {FilmsList, Film, NewRewiew} from '../types/types';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../components/const';
-import {loadFilms, requireAuthorization, setError, loadPromo, loadUserData, loadFilmActive, loadRewiews, loadSimilarFilms} from './action';
+import {redirectToRoute, loadFilms, requireAuthorization, setError, loadPromo, loadUserData, loadFilmActive, loadRewiews, loadSimilarFilms} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
@@ -122,3 +122,4 @@ export const fetchSimilarFilms = createAsyncThunk(
     store.dispatch(loadSimilarFilms(data));
   },
 );
+
