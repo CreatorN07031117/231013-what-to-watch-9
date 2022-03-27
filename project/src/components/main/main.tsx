@@ -31,10 +31,7 @@ function MainScreen(): JSX.Element {
                 <span className="film-card__genre">{promo.genre}</span>
                 <span className="film-card__year">{promo.released}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <Buttons />
-              </div>
+              <Buttons render={() => null}/>
             </div>
           </div>
         </div>

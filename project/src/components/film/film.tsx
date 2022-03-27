@@ -7,7 +7,7 @@ import Catalog from '../catalog/catalog';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
 import FilmRewiews from '../film-reviews/film-reviews';
-import {ScreenType, SIMILAR_FILMS} from '../const';
+import {ScreenType, SIMILAR_FILMS, AuthorizationStatus} from '../const';
 import {useAppSelector} from '../../hooks/';
 import Buttons from '../buttons/buttons';
 import {fetchFilmActive, fetchRewiews, fetchSimilarFilms} from '../../store/api-actions';
@@ -24,7 +24,7 @@ function FilmPage(): JSX.Element {
     store.dispatch(fetchSimilarFilms(params.id as string));
   }, [params.id]);
 
-  const {filmActive, rewiews, similarFilms} = useAppSelector((state) => state);
+  const {authorizationStatus, filmActive, rewiews, similarFilms} = useAppSelector((state) => state);
 
   const screenSwitch = (view: string) => {
     if(view === ScreenType.Details){
@@ -38,6 +38,10 @@ function FilmPage(): JSX.Element {
     evt.preventDefault();
     setScreenView(screen);
   }, []);
+
+  const addRewiewButton = (
+    <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
+  );
 
 
   return (
@@ -57,11 +61,9 @@ function FilmPage(): JSX.Element {
                 <span className="film-card__genre">{filmActive.genre}</span>
                 <span className="film-card__year">{filmActive.released}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <Buttons />
-                <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
-              </div>
+              <Buttons render={() => (
+                authorizationStatus === AuthorizationStatus.Auth? addRewiewButton : (null))}
+              />
             </div>
           </div>
         </div>
