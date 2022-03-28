@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
 import {FilmsList, Film, NewRewiew} from '../types/types';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../components/const';
+import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, TIMEOUT_SHOW_ADD_REWIEW} from '../components/const';
 import {redirectToRoute, loadFilms, requireAuthorization, setError, loadPromo, loadUserData, loadFilmActive, loadRewiews, loadSimilarFilms} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
@@ -54,6 +54,10 @@ export const addRewiew = createAsyncThunk(
   'data/addRewiew',
   async ({id, comment, rating}: NewRewiew) => {
     await api.post(`/comments/${id}`, {comment, rating});
+    setTimeout(
+      () => store.dispatch(redirectToRoute(`/films/${id}`)),
+      TIMEOUT_SHOW_ADD_REWIEW,
+    );
   },
 );
 
