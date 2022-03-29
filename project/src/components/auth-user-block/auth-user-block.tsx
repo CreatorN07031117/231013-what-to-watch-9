@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 function AuthUserBlock (): JSX.Element {
 
   const dispatch = useAppDispatch();
-  const {userData} = useAppSelector((state) => state);
+  const {userData} = useAppSelector(({USER}) => USER);
 
   return (
     <ul className="user-block">

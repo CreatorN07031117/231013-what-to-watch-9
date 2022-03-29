@@ -54,7 +54,7 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 export const TIMEOUT_SHOW_ADD_REWIEW = 800;
 
 export enum NameSpace {
-  films = 'DATA',
+  films = 'FILMS',
   film = 'FILM',
   user = 'USER'
 }

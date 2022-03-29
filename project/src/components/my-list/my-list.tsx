@@ -5,9 +5,9 @@ import {useAppSelector} from '../../hooks/';
 
 
 function MyList(): JSX.Element {
-  let filmsList = useAppSelector((state) => state.films);
+  const {films} = useAppSelector(({FILMS}) => FILMS);
 
-  filmsList = filmsList.filter((item) => item.isFavorite === true);
+  const filmsList = films.filter((item) => item.isFavorite === true);
 
   return (
     <div className="user-page">
