@@ -1,9 +1,9 @@
 /* eslint-disable no-self-assign */
 import {createReducer} from '@reduxjs/toolkit';
-import {selectGenre, getFilmList, showMoreFilms, loadFilms, requireAuthorization, setError, loadPromo, getPromo, getUserData, loadUserData} from './action';
+import {selectGenre, getFilmList, showMoreFilms, loadFilms, requireAuthorization, setError, loadPromo, getPromo, getUserData, loadUserData, loadFilmActive, loadRewiews, loadSimilarFilms} from './action';
 import {ALL_FILMS, FILMS_PER_LOAD, AuthorizationStatus} from '../components/const';
-import {FilmsList, Film} from '../types/types';
-import { UserData } from '../types/user-data';
+import {FilmsList, Film, Rewiews} from '../types/types';
+import {UserData} from '../types/user-data';
 
 
 const initialState = {
@@ -15,6 +15,9 @@ const initialState = {
   error: '',
   promo: {} as Film,
   userData: {} as UserData,
+  filmActive: {} as Film,
+  rewiews: [] as Rewiews,
+  similarFilms: [] as FilmsList,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -50,6 +53,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(loadFilmActive, (state, action) => {
+      state.filmActive = action.payload;
+    })
+    .addCase(loadRewiews, (state, action) => {
+      state.rewiews = action.payload;
+    })
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
     });
 });
 

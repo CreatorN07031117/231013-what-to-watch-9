@@ -3,6 +3,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import MainCatalog from '../main-catalog/main-catalog';
 import {useAppSelector} from '../../hooks/index';
+import Buttons from '../buttons/buttons';
 
 
 function MainScreen(): JSX.Element {
@@ -30,21 +31,7 @@ function MainScreen(): JSX.Element {
                 <span className="film-card__genre">{promo.genre}</span>
                 <span className="film-card__year">{promo.released}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-              </div>
+              <Buttons render={() => null}/>
             </div>
           </div>
         </div>

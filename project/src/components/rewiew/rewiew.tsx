@@ -6,7 +6,7 @@ type RewiewProps = {
 
 function RewiewContent ({rewiew}: RewiewProps): JSX.Element {
   return (
-    <div className="review">
+    <div className="review" style={{borderBottomColor: 'rgba(0,0,0,0.3'}}>
       <blockquote className="review__quote">
         <p className="review__text">{rewiew.comment}</p>
 
