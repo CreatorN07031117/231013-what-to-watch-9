@@ -26,4 +26,5 @@ export type FilmsProcess = {
   isDataLoaded: boolean;
   error: '';
   promo: Film;
+  favoriteFilms: FilmsList;
 };
