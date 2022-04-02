@@ -1,4 +1,3 @@
-/* eslint-disable no-self-assign */
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, ALL_FILMS, FILMS_PER_LOAD} from '../../components/const';
 import {FilmsProcess} from '../../types/store';
@@ -24,7 +23,7 @@ export const filmsProcess = createSlice({
       state.count = FILMS_PER_LOAD;
     },
     getFilmsList: (state) => {
-      state.films = state.films;
+      ({films: state.films} = state);
     },
     showMoreFilms: (state) => {
       state.count = state.count + FILMS_PER_LOAD;
@@ -37,7 +36,7 @@ export const filmsProcess = createSlice({
       state.error = action.payload;
     },
     getPromo: (state) => {
-      state.promo = state.promo;
+      ({promo: state.promo} = state);
     },
     loadPromo: (state, action) => {
       state.promo = action.payload;

@@ -14,8 +14,8 @@ function Buttons (props: {render(): JSX.Element | null}): JSX.Element {
 
   const params = useParams();
 
-  const idFilm = params.id === undefined? promo.id : params.id;
-  const isFavorite = filmActive.isFavorite? 0 : 1;
+  const idFilm = params.id === undefined ? promo.id : params.id;
+  const isFavorite = filmActive.isFavorite ? 0 : 1;
 
   const favoriteStatus = {
     id: idFilm,
@@ -49,19 +49,22 @@ function Buttons (props: {render(): JSX.Element | null}): JSX.Element {
         type="button"
         onClick={() => handleMyList(favoriteStatus)}
       >
-        {filmActive.isFavorite?
-          <svg viewBox="0 0 18 14" width="18" height="14">
-            <use xlinkHref="#in-list"></use>
-          </svg> :
-          <svg viewBox="0 0 19 20" width="19" height="20">
-            <use xlinkHref="#add"></use>
-          </svg>}
+        {filmActive.isFavorite
+          ? (
+            <svg viewBox="0 0 18 14" width="18" height="14">
+              <use xlinkHref="#in-list"></use>
+            </svg>
+          )
+          : (
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add"></use>
+            </svg>
+          )}
         <span>My list</span>
       </button>
       {props.render()}
     </div>
   );
-
 }
 
 export default Buttons;

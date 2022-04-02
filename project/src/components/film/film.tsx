@@ -58,8 +58,10 @@ function FilmPage(): JSX.Element {
                 <span className="film-card__year">{filmActive.released}</span>
               </p>
               <Buttons render={() => (
-                authorizationStatus === AuthorizationStatus.Auth?
-                  <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link> : (null))}
+                authorizationStatus === AuthorizationStatus.Auth
+                  ? <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
+                  : (null)
+              )}
               />
             </div>
           </div>
