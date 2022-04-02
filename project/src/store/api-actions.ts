@@ -1,8 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
-import {FilmsList, Film, NewRewiew} from '../types/types';
+import {FilmsList, Film, NewRewiew, FavoriteStatus} from '../types/types';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, TIMEOUT_SHOW_ADD_REWIEW} from '../components/const';
-import {redirectToRoute, loadFilms, requireAuthorization, setError, loadPromo, loadUserData, loadFilmActive, loadRewiews, loadSimilarFilms} from './action';
+import {loadUserData, requireAuthorization} from './user-process/user-process';
+import {loadFilmActive, loadRewiews, loadSimilarFilms} from './film-process/film-process';
+import {loadFilms, setError, loadPromo, loadFavoriteFilms} from './films-process/films-process';
+import {redirectToRoute} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
@@ -60,7 +63,6 @@ export const addRewiew = createAsyncThunk(
     );
   },
 );
-
 
 export const logoutAction = createAsyncThunk(
   'user/logout',
@@ -127,3 +129,22 @@ export const fetchSimilarFilms = createAsyncThunk(
   },
 );
 
+export const changeFavoriteStatus = createAsyncThunk(
+  'data/changeFavoriteStatus',
+  async ({id, status}: FavoriteStatus) => {
+    const {data} = await api.post(`/favorite/${id}/${status}`);
+    store.dispatch(loadFilmActive(data));
+  },
+);
+
+export const fetchFavoriteFilms = createAsyncThunk(
+  'data/fetchFavoriteFilms',
+  async () => {
+    try {
+      const {data} = await api.get<FilmsList>(APIRoute.Favorite);
+      store.dispatch(loadFavoriteFilms(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);

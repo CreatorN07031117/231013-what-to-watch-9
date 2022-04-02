@@ -8,7 +8,7 @@ import Buttons from '../buttons/buttons';
 
 function MainScreen(): JSX.Element {
 
-  const {promo} = useAppSelector((state) => state);
+  const {promo} = useAppSelector(({FILMS}) => FILMS);
 
   return (
     <React.Fragment>

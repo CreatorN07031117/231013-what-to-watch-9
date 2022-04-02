@@ -24,7 +24,8 @@ function FilmPage(): JSX.Element {
     store.dispatch(fetchSimilarFilms(params.id as string));
   }, [params.id]);
 
-  const {authorizationStatus, filmActive, rewiews, similarFilms} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {filmActive, rewiews, similarFilms} = useAppSelector(({FILM}) => FILM);
 
   const screenSwitch = (view: string) => {
     if(view === ScreenType.Details){
@@ -38,11 +39,6 @@ function FilmPage(): JSX.Element {
     evt.preventDefault();
     setScreenView(screen);
   }, []);
-
-  const addRewiewButton = (
-    <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link>
-  );
-
 
   return (
     <React.Fragment>
@@ -62,7 +58,8 @@ function FilmPage(): JSX.Element {
                 <span className="film-card__year">{filmActive.released}</span>
               </p>
               <Buttons render={() => (
-                authorizationStatus === AuthorizationStatus.Auth? addRewiewButton : (null))}
+                authorizationStatus === AuthorizationStatus.Auth?
+                  <Link to={`/films/${filmActive.id}/review`} title="review"  className="btn film-card__button">Add review</Link> : (null))}
               />
             </div>
           </div>

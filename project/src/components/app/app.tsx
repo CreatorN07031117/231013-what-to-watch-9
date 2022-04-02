@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom';
-import MainScreen from '../main/main';
+import MainScreen from '../main-screen/main-screen';
 import SingIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import FilmPage from '../film/film';
@@ -16,7 +16,9 @@ import browserHistory from '../../browser-history';
 
 function App (): JSX.Element {
 
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {isDataLoaded} = useAppSelector(({FILMS}) => FILMS);
+
   const isCheckedAuth = (authStatus: AuthorizationStatus): boolean =>
     authStatus === AuthorizationStatus.Unknown;
 

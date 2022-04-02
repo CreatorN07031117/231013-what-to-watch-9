@@ -34,7 +34,12 @@ export type Rewiew = {
 export type Rewiews = Rewiew[];
 
 export type NewRewiew = {
-  id: number,
+  id: number;
   comment: string;
   rating: number;
-}
+};
+
+export type FavoriteStatus = {
+  id: number;
+  status: number;
+};

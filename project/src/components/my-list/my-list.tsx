@@ -1,13 +1,17 @@
+import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {useAppSelector} from '../../hooks/';
+import {fetchFavoriteFilms} from '../../store/api-actions';
+import {store} from '../../store';
 
 
 function MyList(): JSX.Element {
-  let filmsList = useAppSelector((state) => state.films);
 
-  filmsList = filmsList.filter((item) => item.isFavorite === true);
+  const {favoriteFilms} = useAppSelector(({FILMS}) => FILMS);
+
+  useEffect(() => {store.dispatch(fetchFavoriteFilms());}, []);
 
   return (
     <div className="user-page">
@@ -36,7 +40,7 @@ function MyList(): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <Catalog filmsList={filmsList} />
+        <Catalog filmsList={favoriteFilms} />
       </section>
 
       <Footer />

@@ -9,7 +9,7 @@ import {useAppDispatch} from '../../hooks';
 
 
 function AddRewiew(): JSX.Element {
-  const {filmActive} = useAppSelector((store) => store);
+  const {filmActive} = useAppSelector(({FILM}) => FILM);
 
   const dispatch = useAppDispatch();
 

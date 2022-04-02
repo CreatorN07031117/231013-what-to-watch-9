@@ -7,16 +7,14 @@ import {useAppSelector} from '../../hooks/';
 
 function MainCatalog (): JSX.Element {
 
-  const genre = useAppSelector((state) => state.genre);
-  const count = useAppSelector((state) => state.count);
-  let filmsList = useAppSelector((state) => state.films);
-
+  const {genre, count, films} = useAppSelector(({FILMS}) => FILMS);
+  let filmsList = films;
 
   if (genre !== ALL_FILMS) {
-    filmsList = filmsList.slice().filter((item) => item.genre === genre);
+    filmsList  = films.slice().filter((item) => item.genre === genre);
   }
 
-  const listLenght = filmsList.length;
+  const listLenght = films.length;
 
   return (
     <section className="catalog">

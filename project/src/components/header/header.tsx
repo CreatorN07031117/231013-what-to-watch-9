@@ -9,7 +9,7 @@ import {useAppSelector} from '../../hooks/index';
 
 function Header(): JSX.Element {
 
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   return (
     <React.Fragment>
