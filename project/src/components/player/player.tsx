@@ -35,7 +35,9 @@ function Player(): JSX.Element {
     const minutes = Math.floor(second/60 - (hours*60));
     const seconds = second % 60;
 
-    return hours === 0 ? `${minutes}:${seconds}` : `${hours}:${minutes}:${seconds}`;
+    return hours === 0
+      ? `${minutes}:${seconds}`
+      : `${hours}:${minutes}:${seconds}`;
   };
 
   useEffect(() => {
@@ -73,12 +75,14 @@ function Player(): JSX.Element {
         poster={filmInPlayer?.previewImage}
         ref={videoRef}
         autoPlay
+        data-testid="video"
       >
       </video>
       <button
         type="button"
         className="player__exit"
         onClick={() => handleExit(filmInPlayer?.id)}
+        data-testid="exit"
       >
         Exit
       </button>
@@ -102,22 +106,24 @@ function Player(): JSX.Element {
             type="button"
             className="player__play"
             onClick={handlePlayingClick}
+            data-testid="play_control"
           >
             <svg viewBox="0 0 19 19" width="19" height="19">
               <use xlinkHref={isPlaying ? '#pause' : '#play-s'}></use>
             </svg>
-            <span>Play</span>
+            <span>{isPlaying ? 'Pause' : 'Play'}</span>
           </button>
           <div className="player__name">{filmInPlayer?.name}</div>
 
           <button
             type="button"
             className="player__full-screen"
-            onClick={(evt: { currentTarget:  HTMLElement }) => {
+            onClick={(evt: {currentTarget:  HTMLElement }) => {
               if (videoRef.current) {
                 videoRef.current.requestFullscreen();
               }
             }}
+            data-testid="fullscreen"
           >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>

@@ -14,14 +14,14 @@ function MainCatalog (): JSX.Element {
     filmsList  = films.slice().filter((item) => item.genre === genre);
   }
 
-  const listLenght = films.length;
+  const listLenght = filmsList.length;
 
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       <GenreList />
-      <Catalog filmsList={filmsList.slice(0, count)}/>
-      {count < listLenght? <ShowMoreBtn /> : (null)}
+      <Catalog filmsList={filmsList.slice(0, count)} />
+      {count < listLenght ? <ShowMoreBtn /> : (null)}
     </section>
   );
 }

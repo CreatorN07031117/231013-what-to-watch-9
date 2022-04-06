@@ -11,7 +11,7 @@ const initialState: FilmsProcess = {
   isDataLoaded: false,
   error: '',
   promo: {} as Film,
-  favoriteFilms: {} as FilmsList,
+  favoriteFilms: [] as FilmsList,
 };
 
 export const filmsProcess = createSlice({

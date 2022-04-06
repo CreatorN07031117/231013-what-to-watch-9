@@ -1,7 +1,7 @@
 function Preloader (): JSX.Element {
   return (
     <div className="loader-item">
-      <i className="loader --2"></i>
+      <i className="loader --2" data-testid="preloader"></i>
     </div>
   );
 }

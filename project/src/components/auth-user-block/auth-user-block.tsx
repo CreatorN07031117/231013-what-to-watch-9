@@ -13,7 +13,7 @@ function AuthUserBlock (): JSX.Element {
       <li className="user-block__item">
         <Link to="/mylist" title="my list">
           <div className="user-block__avatar">
-            <img src={userData.avatarUrl} alt={userData.name} width="63" height="63" />
+            <img src={userData.avatarUrl} alt={userData.name} width="63" height="63" data-testid="avatar" />
           </div>
         </Link>
       </li>
@@ -26,6 +26,7 @@ function AuthUserBlock (): JSX.Element {
           to="/login"
           title="login"
           className="user-block__link"
+          data-testid="sing-out"
         >
         Sign out
         </Link>

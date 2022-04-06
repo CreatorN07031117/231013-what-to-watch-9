@@ -4,6 +4,8 @@ import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import Footer from '../footer/footer';
+import {setError} from '../../store/action';
+import {errorHandle} from '../../services/error-handle';
 
 
 function SingIn (): JSX.Element {
@@ -21,13 +23,21 @@ function SingIn (): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if(
+      loginRef.current !== null &&
+        passwordRef.current !== null &&
+        loginRef.current.value.indexOf('.') &&
+        loginRef.current.value.indexOf('@') &&
+        passwordRef.current.value.indexOf(`${/[A-Za-z]/i}`)
+    ) {
       onSubmit ({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
+        login: loginRef.current?.value as string,
+        password: passwordRef.current?.value as string,
       });
-      navigate('/');
+      return navigate('/');
     }
+    errorHandle('email or password incorrect');
+    return dispatch(setError('email or password incorrect'));
   };
 
   return (
@@ -59,6 +69,8 @@ function SingIn (): JSX.Element {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                data-testid="login"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -70,6 +82,8 @@ function SingIn (): JSX.Element {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                data-testid="password"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

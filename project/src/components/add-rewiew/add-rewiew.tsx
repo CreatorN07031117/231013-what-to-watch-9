@@ -1,22 +1,32 @@
-import {useState, ChangeEvent} from 'react';
-import {Link} from 'react-router-dom';
-import RewiewContent from '../rewiew/rewiew';
+import dayjs from 'dayjs';
+import {useState, ChangeEvent, useEffect} from 'react';
+import {Link, useParams} from 'react-router-dom';
+import RewiewContent from '../rewiew-content/rewiew-content';
 import {NewRewiew} from '../../types/types';
 import {addRewiew} from '../../store/api-actions';
-import {useAppSelector} from '../../hooks/';
+import {store} from '../../store';
+import {fetchFilmActive, fetchRewiews, fetchSimilarFilms} from '../../store/api-actions';
 import AuthUserBlock from '../auth-user-block/auth-user-block';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 
 
 function AddRewiew(): JSX.Element {
-  const {filmActive} = useAppSelector(({FILM}) => FILM);
+  const params = useParams();
 
+  useEffect(() => {
+    store.dispatch(fetchFilmActive(params.id as string));
+    store.dispatch(fetchRewiews(params.id as string));
+    store.dispatch(fetchSimilarFilms(params.id as string));
+  }, [params.id]);
+
+  const {filmActive} = useAppSelector(({FILM}) => FILM);
   const dispatch = useAppDispatch();
+  const today = dayjs();
 
   const [rewiew, setRewiew] = useState({
     rating: 0,
     comment: '',
-    date: 'Today',
+    date: `${today}`,
     user: {
       name: 'You',
     },
@@ -92,7 +102,7 @@ function AddRewiew(): JSX.Element {
           }}
         >
           <div className="rating">
-            <div className="rating__stars">
+            <div className="rating__stars" data-testid="rating">
               <input className="rating__input" id="star-10" type="radio" name="rating" value="10" onChange={formChangeHandle}/>
               <label className="rating__label" htmlFor="star-10">Rating 10</label>
 
@@ -126,9 +136,9 @@ function AddRewiew(): JSX.Element {
           </div>
 
           <div className="add-review__text" style={{backgroundColor: 'rgba(255,255,255,0.4'}}>
-            <textarea className="add-review__textarea" name="comment" id="comment" onChange={formChangeHandle} value={rewiew.comment}></textarea>
+            <textarea className="add-review__textarea" name="comment" id="comment" onChange={formChangeHandle} value={rewiew.comment} data-testid="comment"></textarea>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
+              <button className="add-review__btn" type="submit" data-testid="submit">Post</button>
             </div>
 
           </div>

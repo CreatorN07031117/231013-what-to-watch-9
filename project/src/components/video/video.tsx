@@ -44,7 +44,7 @@ function Video ({src, previewImage, isActive, isMuted, isLoop}: VideoProps): JSX
 
   return (
     <video
-      src={src} className="player__video" poster={previewImage} muted={isMuted} loop={isLoop} ref={videoRef}
+      src={src} className="player__video" poster={previewImage} muted={isMuted} loop={isLoop} ref={videoRef} data-testid="video"
     >
     </video>
   );

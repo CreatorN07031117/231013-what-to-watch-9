@@ -1,5 +1,5 @@
 import {Rewiews} from '../../types/types';
-import RewiewContent from '../rewiew/rewiew';
+import RewiewContent from '../rewiew-content/rewiew-content';
 
 type FilmRewiewsProps = {
     rewiews: Rewiews;
