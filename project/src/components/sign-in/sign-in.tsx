@@ -29,7 +29,8 @@ function SingIn (): JSX.Element {
         passwordRef.current !== null &&
         loginRef.current.value.indexOf('.') &&
         loginRef.current.value.indexOf('@') &&
-        passwordRef.current.value.match(/[A-Za-z][0-9]/)
+        passwordRef.current.value.match(/[A-Za-z]/) &&
+        passwordRef.current.value.match(/[0-9]/)
     ) {
       onSubmit ({
         login: loginRef.current?.value as string,
