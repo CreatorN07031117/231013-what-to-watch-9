@@ -19,7 +19,7 @@ if(AuthorizationStatus.Auth){store.dispatch(fetchFavoriteFilms());}
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ToastContainer limit={1}/>
+      <ToastContainer limit={1}  theme={'dark'} />
       <HistoryRouter history={browserHistory}>
         <App />
       </HistoryRouter>
