@@ -7,17 +7,19 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {fetchFilmsAction, checkAuthAction, fetchPromo, fetchFavoriteFilms} from '../src/store/api-actions';
 import HistoryRouter from '../src/components/history-route/history-route';
+import {AuthorizationStatus} from './components/const';
 import browserHistory from './browser-history';
 
-store.dispatch(fetchPromo());
-store.dispatch(fetchFilmsAction());
+
 store.dispatch(checkAuthAction());
-store.dispatch(fetchFavoriteFilms());
+store.dispatch(fetchFilmsAction());
+store.dispatch(fetchPromo());
+if(AuthorizationStatus.Auth){store.dispatch(fetchFavoriteFilms());}
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ToastContainer />
+      <ToastContainer limit={1}/>
       <HistoryRouter history={browserHistory}>
         <App />
       </HistoryRouter>
