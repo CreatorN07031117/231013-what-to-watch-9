@@ -32,9 +32,6 @@ export const filmsProcess = createSlice({
       state.films = action.payload;
       state.isDataLoaded = true;
     },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
     getPromo: (state) => {
       ({promo: state.promo} = state);
     },
@@ -47,4 +44,4 @@ export const filmsProcess = createSlice({
   },
 });
 
-export const {selectGenre, getFilmsList, showMoreFilms, loadFilms, setError, getPromo, loadPromo, loadFavoriteFilms} = filmsProcess.actions;
+export const {selectGenre, getFilmsList, showMoreFilms, loadFilms, getPromo, loadPromo, loadFavoriteFilms} = filmsProcess.actions;

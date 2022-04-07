@@ -3,9 +3,8 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {toast} from 'react-toastify';
 import Footer from '../footer/footer';
-import {setError} from '../../store/action';
-import {errorHandle} from '../../services/error-handle';
 
 
 function SingIn (): JSX.Element {
@@ -20,6 +19,8 @@ function SingIn (): JSX.Element {
     dispatch(loginAction(authData));
   };
 
+  const notify =  ( )  =>  toast ('Login or password does not match the rules');
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -28,7 +29,7 @@ function SingIn (): JSX.Element {
         passwordRef.current !== null &&
         loginRef.current.value.indexOf('.') &&
         loginRef.current.value.indexOf('@') &&
-        passwordRef.current.value.indexOf(`${/[A-Za-z]/i}`)
+        passwordRef.current.value.match(/[A-Za-z][0-9]/)
     ) {
       onSubmit ({
         login: loginRef.current?.value as string,
@@ -36,8 +37,7 @@ function SingIn (): JSX.Element {
       });
       return navigate('/');
     }
-    errorHandle('email or password incorrect');
-    return dispatch(setError('email or password incorrect'));
+    notify();
   };
 
   return (

@@ -1,12 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import {store} from '../store/index';
 import {AppDispatch, State} from '../types/store';
 import {FilmsList, Film, NewRewiew, FavoriteStatus} from '../types/types';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, TIMEOUT_SHOW_ADD_REWIEW} from '../components/const';
+import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ADD_REWIEW} from '../components/const';
 import {loadUserData, requireAuthorization} from './user-process/user-process';
 import {loadFilmActive, loadRewiews, loadSimilarFilms} from './film-process/film-process';
-import {loadFilms, setError, loadPromo, loadFavoriteFilms} from './films-process/films-process';
+import {loadFilms, loadPromo, loadFavoriteFilms} from './films-process/films-process';
 import {redirectToRoute} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
@@ -74,11 +73,15 @@ export const addRewiew = createAsyncThunk<void, NewRewiew, {
 }>(
   'data/addRewiew',
   async ({id, comment, rating}, {dispatch, extra: api}) => {
-    await api.post(`/comments/${id}`, {comment, rating});
-    setTimeout(
-      () => dispatch(redirectToRoute(`/films/${id}`)),
-      TIMEOUT_SHOW_ADD_REWIEW,
-    );
+    try {
+      await api.post(`/comments/${id}`, {comment, rating});
+      setTimeout(
+        () => dispatch(redirectToRoute(`/films/${id}`)),
+        TIMEOUT_SHOW_ADD_REWIEW,
+      );
+    } catch (error) {
+      errorHandle(error);
+    }
   },
 );
 
@@ -99,21 +102,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     }
   },
 );
-
-export const clearErrorAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance,
-}>(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
-
 
 export const fetchPromo = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,

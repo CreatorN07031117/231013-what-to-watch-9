@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import App from './components/app/app';
-import ErrorMessage from './components/error-message/error-message';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {fetchFilmsAction, checkAuthAction, fetchPromo, fetchFavoriteFilms} from '../src/store/api-actions';
 import HistoryRouter from '../src/components/history-route/history-route';
 import browserHistory from './browser-history';
@@ -16,7 +17,7 @@ store.dispatch(fetchFavoriteFilms());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ErrorMessage />
+      <ToastContainer />
       <HistoryRouter history={browserHistory}>
         <App />
       </HistoryRouter>

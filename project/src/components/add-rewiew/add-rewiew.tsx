@@ -1,13 +1,14 @@
 import dayjs from 'dayjs';
 import {useState, ChangeEvent, useEffect} from 'react';
+import {toast} from 'react-toastify';
 import {Link, useParams} from 'react-router-dom';
-import RewiewContent from '../rewiew-content/rewiew-content';
 import {NewRewiew} from '../../types/types';
 import {addRewiew} from '../../store/api-actions';
 import {store} from '../../store';
 import {fetchFilmActive, fetchRewiews, fetchSimilarFilms} from '../../store/api-actions';
 import AuthUserBlock from '../auth-user-block/auth-user-block';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {MIN_REWIEW_LENGHT, MAX_REWIEW_LENGHT} from '../const';
 
 
 function AddRewiew(): JSX.Element {
@@ -32,22 +33,34 @@ function AddRewiew(): JSX.Element {
     },
   });
 
-  const [newComment, setNewComment] = useState(false);
+  const notify = (message : string) => toast(message);
+
+  const [, setIsSubmitting] = useState(false);
+  const [postBtndisabled, setPostBtnDisabled] = useState(true);
+  const [, setNewComment] = useState(false);
 
   const formChangeHandle = (evt: ChangeEvent<HTMLInputElement>|ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setRewiew({...rewiew, [name]: value});
+
+    if(rewiew.comment.length >= MIN_REWIEW_LENGHT && rewiew.comment.length <= MAX_REWIEW_LENGHT){
+      setPostBtnDisabled(false);
+    }
+    if(rewiew.comment.length > MAX_REWIEW_LENGHT || rewiew.comment.length < MIN_REWIEW_LENGHT){
+      setPostBtnDisabled(true);
+    }
   };
 
-  const newCommentContent = () => (
-    <div>
-      <p className="film-card__director"><strong>Success! Your comment has been published</strong></p>
-      <RewiewContent rewiew={rewiew}/>
-    </div>
-  );
-
   const onSubmitRewiew = (newRewiew: NewRewiew) => {
-    dispatch(addRewiew(newRewiew));
+    if(rewiew.rating === 0){
+      notify('Сhoose rating level');
+    }
+    if(rewiew.rating > 0){
+      setIsSubmitting(true);
+      dispatch(addRewiew(newRewiew));
+      setIsSubmitting(false);
+      notify('Success! Your comment has been published');
+    }
   };
 
   return (
@@ -88,9 +101,8 @@ function AddRewiew(): JSX.Element {
       </div>
 
       <div className="add-review">
-        {newComment ?  newCommentContent() : null}
         <form action="#"
-          className={newComment ? 'visually-hidden' : 'add-review__form'}
+          className="add-review__form"
           onSubmit={(evt) => {
             evt.preventDefault();
             setNewComment(true);
@@ -138,7 +150,14 @@ function AddRewiew(): JSX.Element {
           <div className="add-review__text" style={{backgroundColor: 'rgba(255,255,255,0.4'}}>
             <textarea className="add-review__textarea" name="comment" id="comment" onChange={formChangeHandle} value={rewiew.comment} data-testid="comment"></textarea>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit" data-testid="submit">Post</button>
+              <button
+                className="add-review__btn"
+                type="submit"
+                data-testid="submit"
+                disabled={postBtndisabled}
+              >
+                Post
+              </button>
             </div>
 
           </div>
