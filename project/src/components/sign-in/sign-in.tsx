@@ -7,6 +7,9 @@ import {toast} from 'react-toastify';
 import Footer from '../footer/footer';
 
 
+const passwordRE = /^.*(?:[0-9]+[a-z]|[a-z]+[0-9]).*$/i;
+const emailRE = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
 function SingIn (): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -24,14 +27,7 @@ function SingIn (): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if(
-      loginRef.current !== null &&
-        passwordRef.current !== null &&
-        loginRef.current.value.indexOf('.') &&
-        loginRef.current.value.indexOf('@') &&
-        passwordRef.current.value.match(/[A-Za-z]/) &&
-        passwordRef.current.value.match(/[0-9]/)
-    ) {
+    if(emailRE.test(loginRef.current?.value as string) && passwordRE.test(passwordRef.current?.value as string)) {
       onSubmit ({
         login: loginRef.current?.value as string,
         password: passwordRef.current?.value as string,

@@ -6,11 +6,11 @@ import Footer from '../footer/footer';
 import Catalog from '../catalog/catalog';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
-import FilmRewiews from '../film-reviews/film-reviews';
+import FilmReviews from '../film-reviews/film-reviews';
 import {ScreenType, SIMILAR_FILMS, AuthorizationStatus} from '../const';
 import {useAppSelector} from '../../hooks/';
 import Buttons from '../buttons/buttons';
-import {fetchFilmActive, fetchRewiews, fetchSimilarFilms} from '../../store/api-actions';
+import {fetchFilmActive, fetchReviews, fetchSimilarFilms} from '../../store/api-actions';
 import {store} from '../../store';
 
 
@@ -20,18 +20,18 @@ function FilmPage(): JSX.Element {
 
   useEffect(() => {
     store.dispatch(fetchFilmActive(params.id as string));
-    store.dispatch(fetchRewiews(params.id as string));
+    store.dispatch(fetchReviews(params.id as string));
     store.dispatch(fetchSimilarFilms(params.id as string));
   }, [params.id]);
 
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
-  const {filmActive, rewiews, similarFilms} = useAppSelector(({FILM}) => FILM);
+  const {filmActive, reviews, similarFilms} = useAppSelector(({FILM}) => FILM);
 
   const screenSwitch = (view: string) => {
     if(view === ScreenType.Details){
       return <FilmDetail film={filmActive} />;
     } else if(view === ScreenType.Reviews){
-      return <FilmRewiews rewiews={rewiews} />;
+      return <FilmReviews reviews={reviews} />;
     } else { return <FilmOverview film={filmActive} />;}
   };
 

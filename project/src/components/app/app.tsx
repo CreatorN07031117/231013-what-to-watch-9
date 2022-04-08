@@ -2,8 +2,8 @@ import {Route, Routes, Navigate} from 'react-router-dom';
 import MainScreen from '../main-screen/main-screen';
 import SingIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
-import FilmPage from '../film/film';
-import AddRewiew from '../add-rewiew/add-rewiew';
+import FilmPage from '../film-page/film-page';
+import AddReview from '../add-review/add-review';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Player from '../player/player';
@@ -46,7 +46,7 @@ function App (): JSX.Element {
           <Route index element={<FilmPage />} />
           <Route path='review' element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <AddRewiew />
+              <AddReview />
             </PrivateRoute>
           }
           />

@@ -1,10 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {AppDispatch, State} from '../types/store';
-import {FilmsList, Film, NewRewiew, FavoriteStatus} from '../types/types';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ADD_REWIEW} from '../components/const';
+import {FilmsList, Film, NewReview, FavoriteStatus} from '../types/types';
+import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ADD_REVIEW} from '../components/const';
 import {loadUserData, requireAuthorization} from './user-process/user-process';
-import {loadFilmActive, loadRewiews, loadSimilarFilms} from './film-process/film-process';
+import {loadFilmActive, loadReviews, loadSimilarFilms} from './film-process/film-process';
 import {loadFilms, loadPromo, loadFavoriteFilms} from './films-process/films-process';
 import {redirectToRoute} from './action';
 import {errorHandle} from '../services/error-handle';
@@ -42,7 +42,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(loadUserData(data));
     } catch (error) {
-      errorHandle(error);
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -66,18 +65,18 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
-export const addRewiew = createAsyncThunk<void, NewRewiew, {
+export const addReview = createAsyncThunk<void, NewReview, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance,
 }>(
-  'data/addRewiew',
+  'data/addReview',
   async ({id, comment, rating}, {dispatch, extra: api}) => {
     try {
       await api.post(`/comments/${id}`, {comment, rating});
       setTimeout(
         () => dispatch(redirectToRoute(`/films/${id}`)),
-        TIMEOUT_SHOW_ADD_REWIEW,
+        TIMEOUT_SHOW_ADD_REVIEW,
       );
     } catch (error) {
       errorHandle(error);
@@ -135,15 +134,15 @@ export const fetchFilmActive = createAsyncThunk<void, string, {
   },
 );
 
-export const fetchRewiews = createAsyncThunk<void, string, {
+export const fetchReviews = createAsyncThunk<void, string, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance,
 }>(
-  'data/fetchRewiews',
+  'data/fetchReviews',
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get(`/comments/${id}`);
-    dispatch(loadRewiews(data));
+    dispatch(loadReviews(data));
   },
 );
 

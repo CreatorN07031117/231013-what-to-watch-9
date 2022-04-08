@@ -14,7 +14,7 @@ function Buttons (props: {render(): JSX.Element | null}): JSX.Element {
 
   const params = useParams();
 
-  const idFilm = params.id === undefined ? promo.id : params.id;
+  const idFilm = params.id || promo.id;
   const isFavorite = filmActive.isFavorite ? 0 : 1;
 
   const favoriteStatus = {

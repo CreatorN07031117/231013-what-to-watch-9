@@ -8,21 +8,25 @@ function GenreList (): JSX.Element {
 
   const {genre, films} = useAppSelector(({FILMS}) => FILMS);
 
-
   const genresSet = new Set<string>([ALL_FILMS]);
   films.forEach((item) => genresSet.add(item.genre));
   let genresList: string[] = [...genresSet];
 
   genresList = genresList.slice(0, MAX_GENRES);
 
+  const handleClick = (item: string) => {
+    dispatch(selectGenre(item));
+    dispatch(getFilmsList());
+  };
+
   return (
     <ul className="catalog__genres-list">
       {genresList.map((item) => (
         <li className={`catalog__genres-item ${item === genre  && 'catalog__genres-item--active'}`}
           key={item}
-          onClick={() => {
-            dispatch(selectGenre(item));
-            dispatch(getFilmsList());
+          onClick={(evt) => {
+            evt.preventDefault();
+            handleClick(item);
           }}
         >
           <a href="# " className="catalog__genres-link">{item}</a>

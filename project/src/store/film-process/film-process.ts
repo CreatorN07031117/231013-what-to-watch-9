@@ -1,12 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../components/const';
 import {FilmProcess} from '../../types/store';
-import {FilmsList, Film, Rewiews} from '../../types/types';
+import {FilmsList, Film, Reviews} from '../../types/types';
 
 
 const initialState: FilmProcess = {
   filmActive: {} as Film,
-  rewiews: [] as Rewiews,
+  reviews: [] as Reviews,
   similarFilms: [] as FilmsList,
 };
 
@@ -17,8 +17,8 @@ export const filmProcess = createSlice({
     loadFilmActive: (state, action) => {
       state.filmActive = action.payload;
     },
-    loadRewiews: (state, action) => {
-      state.rewiews = action.payload;
+    loadReviews: (state, action) => {
+      state.reviews = action.payload;
     },
     loadSimilarFilms: (state, action) => {
       state.similarFilms = action.payload;
@@ -26,4 +26,4 @@ export const filmProcess = createSlice({
   },
 });
 
-export const {loadFilmActive, loadRewiews, loadSimilarFilms} = filmProcess.actions;
+export const {loadFilmActive, loadReviews, loadSimilarFilms} = filmProcess.actions;

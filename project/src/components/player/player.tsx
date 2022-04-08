@@ -11,38 +11,27 @@ function Player(): JSX.Element {
   const {films} = useAppSelector(({FILMS}) => FILMS);
   const filmInPlayer = films.find((film) => film.id === Number(params.id));
 
-  const [, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [inRunTime, setRunTime] = useState(0);
 
 
-  useEffect(() => {
-    if (videoRef.current !== null) {
-      videoRef.current.onloadeddata = () => setIsLoading(false);
-    }
-
-    return () => {
-      if (videoRef.current !== null) {
-        videoRef.current.onloadeddata = null;
-        videoRef.current = null;
-      }
-    };
-  }, [filmInPlayer]);
-
-
   const getDuration = (second: number) => {
-    const hours = Math.floor(second/60/60);
-    const minutes = Math.floor(second/60 - (hours*60));
-    const seconds = second % 60;
+    if(videoRef.current !== null){
+      if(inRunTime !== null){
+        const hours = Math.floor(second/60/60);
+        const minutes = Math.floor(second/60 - (hours*60));
+        const seconds = second % 60;
 
-    return hours === 0
-      ? `${minutes}:${seconds}`
-      : `${hours}:${minutes}:${seconds}`;
+        return hours === 0
+          ? `${minutes}:${seconds}`
+          : `${hours}:${minutes}:${seconds}`;
+      }
+    }
   };
 
   useEffect(() => {
     let intervalId:  NodeJS.Timer;
-    if (isPlaying) {
+    if (isPlaying && videoRef.current !== null) {
       intervalId = setInterval(() => {
         if (videoRef.current) {
           setRunTime(Math.round(videoRef.current.duration - videoRef.current.currentTime));
@@ -119,9 +108,7 @@ function Player(): JSX.Element {
             type="button"
             className="player__full-screen"
             onClick={(evt: {currentTarget:  HTMLElement }) => {
-              if (videoRef.current) {
-                videoRef.current.requestFullscreen();
-              }
+              videoRef.current?.requestFullscreen();
             }}
             data-testid="fullscreen"
           >

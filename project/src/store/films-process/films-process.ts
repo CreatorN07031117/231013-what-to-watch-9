@@ -9,7 +9,6 @@ const initialState: FilmsProcess = {
   films: [] as FilmsList,
   count: FILMS_PER_LOAD,
   isDataLoaded: false,
-  error: '',
   promo: {} as Film,
   favoriteFilms: [] as FilmsList,
 };

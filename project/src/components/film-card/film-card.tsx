@@ -19,9 +19,11 @@ function FilmCard({film, isActive, setFilmId}: FilmCardProps): JSX.Element {
         setFilmId(null);
       }}
     >
-      <div className="small-film-card__image">
-        <Video src={film.previewVideoLink} previewImage={film.previewImage} isActive={isActive} isMuted isLoop />
-      </div>
+      <Link to={`/films/${film.id}`}>
+        <div className="small-film-card__image">
+          <Video src={film.previewVideoLink} previewImage={film.previewImage} isActive={isActive} isMuted isLoop />
+        </div>
+      </Link>
       <h3 className="small-film-card__title">
         <Link to={`/films/${film.id}`} title="" className="small-film-card__link">{film.name}</Link>
       </h3>
