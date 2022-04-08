@@ -1,4 +1,3 @@
-/* eslint-disable no-self-assign */
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, AuthorizationStatus} from '../../components/const';
 import {UserProcess} from '../../types/store';
@@ -21,7 +20,7 @@ export const userProcess = createSlice({
       state.userData = action.payload;
     },
     getUserData: (state) => {
-      state.userData = state.userData;
+      ({userData: state.userData} = state);
     },
   },
 });

@@ -32,6 +32,10 @@ export const SIMILAR_FILMS = 4;
 
 export const MAX_GENRES = 9;
 
+export const MIN_REVIEW_LENGHT = 50;
+
+export const MAX_REVIEW_LENGHT = 400;
+
 export const BACKEND_URL = 'https://9.react.pages.academy/wtw';
 
 export const REQUEST_TIMEOUT = 5000;
@@ -50,9 +54,7 @@ export enum HTTP_CODE {
   NOT_FOUND = 404,
 }
 
-export const TIMEOUT_SHOW_ERROR = 2000;
-
-export const TIMEOUT_SHOW_ADD_REWIEW = 800;
+export const TIMEOUT_SHOW_ADD_REVIEW = 800;
 
 export enum NameSpace {
   films = 'FILMS',

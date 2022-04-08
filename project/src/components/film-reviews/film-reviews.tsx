@@ -1,24 +1,24 @@
-import {Rewiews} from '../../types/types';
-import RewiewContent from '../rewiew/rewiew';
+import {Reviews} from '../../types/types';
+import ReviewContent from '../review-content/review-content';
 
-type FilmRewiewsProps = {
-    rewiews: Rewiews;
+type FilmReviewsProps = {
+    reviews: Reviews;
 }
 
-function FilmRewiews ({rewiews}: FilmRewiewsProps): JSX.Element {
-  const rewiewsPart = (rewiews.length/2);
+function FilmReviews ({reviews}: FilmReviewsProps): JSX.Element {
+  const rewiewsPart = (reviews.length/2);
 
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {rewiews.slice(rewiewsPart).map((item) => <RewiewContent rewiew={item} key={item.id} />)}
+        {reviews.slice(rewiewsPart).map((item) => <ReviewContent review={item} key={item.id} />)}
       </div>
 
       <div className="film-card__reviews-col">
-        {rewiews.slice(0, rewiewsPart).map((item) => <RewiewContent rewiew={item} key={item.id}/>)}
+        {reviews.slice(0, rewiewsPart).map((item) => <ReviewContent review={item} key={item.id}/>)}
       </div>
     </div>
   );
 }
 
-export default FilmRewiews;
+export default FilmReviews;

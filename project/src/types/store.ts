@@ -1,7 +1,7 @@
 import {store} from '../store/index.js';
 import {AuthorizationStatus} from '../components/const.js';
 import {UserData} from '../types/user-data';
-import {FilmsList, Film, Rewiews} from '../types/types';
+import {FilmsList, Film, Reviews} from '../types/types';
 
 
 export type State = ReturnType<typeof store.getState>;
@@ -15,7 +15,7 @@ export type UserProcess = {
 
 export type FilmProcess = {
   filmActive: Film;
-  rewiews: Rewiews;
+  reviews: Reviews;
   similarFilms: FilmsList;
 };
 
@@ -24,7 +24,6 @@ export type FilmsProcess = {
   films: FilmsList;
   count: number;
   isDataLoaded: boolean;
-  error: '';
   promo: Film;
   favoriteFilms: FilmsList;
 };

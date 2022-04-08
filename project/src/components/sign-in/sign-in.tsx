@@ -3,8 +3,12 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {toast} from 'react-toastify';
 import Footer from '../footer/footer';
 
+
+const passwordRE = /^.*(?:[0-9]+[a-z]|[a-z]+[0-9]).*$/i;
+const emailRE = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
 function SingIn (): JSX.Element {
 
@@ -18,16 +22,19 @@ function SingIn (): JSX.Element {
     dispatch(loginAction(authData));
   };
 
+  const notify =  ( )  =>  toast ('Login or password does not match the rules');
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if(emailRE.test(loginRef.current?.value as string) && passwordRE.test(passwordRef.current?.value as string)) {
       onSubmit ({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
+        login: loginRef.current?.value as string,
+        password: passwordRef.current?.value as string,
       });
-      navigate('/');
+      return navigate('/');
     }
+    notify();
   };
 
   return (
@@ -59,6 +66,8 @@ function SingIn (): JSX.Element {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                data-testid="login"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -70,6 +79,8 @@ function SingIn (): JSX.Element {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                data-testid="password"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

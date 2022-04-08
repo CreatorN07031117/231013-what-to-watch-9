@@ -20,7 +20,7 @@ export type Film = {
 
 export type FilmsList = Film[];
 
-export type Rewiew = {
+export type Review = {
   comment: string;
   date: string;
   id?: string;
@@ -31,9 +31,9 @@ export type Rewiew = {
   }
 };
 
-export type Rewiews = Rewiew[];
+export type Reviews = Review[];
 
-export type NewRewiew = {
+export type NewReview = {
   id: number;
   comment: string;
   rating: number;

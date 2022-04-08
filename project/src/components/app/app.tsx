@@ -1,17 +1,15 @@
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, Navigate} from 'react-router-dom';
 import MainScreen from '../main-screen/main-screen';
 import SingIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
-import FilmPage from '../film/film';
-import AddRewiew from '../add-rewiew/add-rewiew';
+import FilmPage from '../film-page/film-page';
+import AddReview from '../add-review/add-review';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import Player from '../player/player';
 import Preloader from '../preloader/preloader';
 import {AuthorizationStatus} from '../const';
 import {useAppSelector} from '../../hooks/index';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
 
 
 function App (): JSX.Element {
@@ -29,31 +27,34 @@ function App (): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path='/'>
-          <Route index element={<MainScreen  />} />
-          <Route path='mylist' element={
+    <Routes>
+      <Route path='/'>
+        <Route index element={<MainScreen  />} />
+        <Route path='mylist' element={
+          <PrivateRoute authorizationStatus={authorizationStatus}>
+            <MyList />
+          </PrivateRoute>
+        }
+        />
+        <Route path='login' element={
+          authorizationStatus === AuthorizationStatus.NoAuth
+            ? <SingIn />
+            : <Navigate replace to='/' />
+        }
+        />
+        <Route path='films/:id'>
+          <Route index element={<FilmPage />} />
+          <Route path='review' element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <MyList />
+              <AddReview />
             </PrivateRoute>
           }
           />
-          <Route path='login' element={<SingIn />} />
-          <Route path='films/:id'>
-            <Route index element={<FilmPage />} />
-            <Route path='review' element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
-                <AddRewiew />
-              </PrivateRoute>
-            }
-            />
-          </Route>
-          <Route path='player/:id' element={<Player />} />
         </Route>
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </HistoryRouter>
+        <Route path='player/:id' element={<Player />} />
+      </Route>
+      <Route path='*' element={<NotFound />} />
+    </Routes>
   );
 }
 

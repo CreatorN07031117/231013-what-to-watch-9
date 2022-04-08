@@ -1,4 +1,3 @@
-/* eslint-disable no-self-assign */
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, ALL_FILMS, FILMS_PER_LOAD} from '../../components/const';
 import {FilmsProcess} from '../../types/store';
@@ -10,9 +9,8 @@ const initialState: FilmsProcess = {
   films: [] as FilmsList,
   count: FILMS_PER_LOAD,
   isDataLoaded: false,
-  error: '',
   promo: {} as Film,
-  favoriteFilms: {} as FilmsList,
+  favoriteFilms: [] as FilmsList,
 };
 
 export const filmsProcess = createSlice({
@@ -24,7 +22,7 @@ export const filmsProcess = createSlice({
       state.count = FILMS_PER_LOAD;
     },
     getFilmsList: (state) => {
-      state.films = state.films;
+      ({films: state.films} = state);
     },
     showMoreFilms: (state) => {
       state.count = state.count + FILMS_PER_LOAD;
@@ -33,11 +31,8 @@ export const filmsProcess = createSlice({
       state.films = action.payload;
       state.isDataLoaded = true;
     },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
     getPromo: (state) => {
-      state.promo = state.promo;
+      ({promo: state.promo} = state);
     },
     loadPromo: (state, action) => {
       state.promo = action.payload;
@@ -48,4 +43,4 @@ export const filmsProcess = createSlice({
   },
 });
 
-export const {selectGenre, getFilmsList, showMoreFilms, loadFilms, setError, getPromo, loadPromo, loadFavoriteFilms} = filmsProcess.actions;
+export const {selectGenre, getFilmsList, showMoreFilms, loadFilms, getPromo, loadPromo, loadFavoriteFilms} = filmsProcess.actions;

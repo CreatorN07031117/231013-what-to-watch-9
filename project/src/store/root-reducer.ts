@@ -1,4 +1,3 @@
-/* eslint-disable no-self-assign */
 import {combineReducers} from '@reduxjs/toolkit';
 import {NameSpace} from '../components/const';
 import {userProcess} from './user-process/user-process';

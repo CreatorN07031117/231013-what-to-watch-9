@@ -1,10 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {api, store} from '../store';
-import {FilmsList, Film, NewRewiew, FavoriteStatus} from '../types/types';
-import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR, TIMEOUT_SHOW_ADD_REWIEW} from '../components/const';
+import {AxiosInstance} from 'axios';
+import {AppDispatch, State} from '../types/store';
+import {FilmsList, Film, NewReview, FavoriteStatus} from '../types/types';
+import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ADD_REVIEW} from '../components/const';
 import {loadUserData, requireAuthorization} from './user-process/user-process';
-import {loadFilmActive, loadRewiews, loadSimilarFilms} from './film-process/film-process';
-import {loadFilms, setError, loadPromo, loadFavoriteFilms} from './films-process/films-process';
+import {loadFilmActive, loadReviews, loadSimilarFilms} from './film-process/film-process';
+import {loadFilms, loadPromo, loadFavoriteFilms} from './films-process/films-process';
 import {redirectToRoute} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
@@ -13,136 +14,172 @@ import {saveToken, dropToken} from '../services/token';
 
 
 export const fetchFilmsAction =
-createAsyncThunk(
+createAsyncThunk <void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'data/fetchFilms',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<FilmsList>(APIRoute.Films);
-      store.dispatch(loadFilms(data));
+      dispatch(loadFilms(data));
     } catch (error) {
       errorHandle(error);
     }
   },
 );
 
-export const checkAuthAction = createAsyncThunk(
+export const checkAuthAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'user/checkAuth',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get(APIRoute.Login);
-      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      store.dispatch(loadUserData(data));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(loadUserData(data));
     } catch (error) {
-      errorHandle(error);
-      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
 );
 
-export const loginAction = createAsyncThunk(
+export const loginAction = createAsyncThunk<void, AuthData, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'user/login',
-  async ({login: email, password}: AuthData) => {
+  async ({login: email, password}, {dispatch, extra: api}) => {
     try {
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(data.token);
-      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      store.dispatch(loadUserData(data));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(loadUserData(data));
     } catch (error) {
-      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
 );
 
-export const addRewiew = createAsyncThunk(
-  'data/addRewiew',
-  async ({id, comment, rating}: NewRewiew) => {
-    await api.post(`/comments/${id}`, {comment, rating});
-    setTimeout(
-      () => store.dispatch(redirectToRoute(`/films/${id}`)),
-      TIMEOUT_SHOW_ADD_REWIEW,
-    );
+export const addReview = createAsyncThunk<void, NewReview, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
+  'data/addReview',
+  async ({id, comment, rating}, {dispatch, extra: api}) => {
+    try {
+      await api.post(`/comments/${id}`, {comment, rating});
+      setTimeout(
+        () => dispatch(redirectToRoute(`/films/${id}`)),
+        TIMEOUT_SHOW_ADD_REVIEW,
+      );
+    } catch (error) {
+      errorHandle(error);
+    }
   },
 );
 
-export const logoutAction = createAsyncThunk(
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'user/logout',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
-      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-      store.dispatch(loadUserData({} as UserData));
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(loadUserData({} as UserData));
     } catch (error) {
       errorHandle (error);
     }
   },
 );
 
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
-
-
-export const fetchPromo = createAsyncThunk(
+export const fetchPromo = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'data/fetchPromo',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<Film>(APIRoute.Promo);
-      store.dispatch(loadPromo(data));
+      dispatch(loadPromo(data));
     } catch (error) {
       errorHandle (error);
     }
   },
 );
 
-export const fetchFilmActive = createAsyncThunk(
+export const fetchFilmActive = createAsyncThunk<void, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'data/fetchFilmActive',
-  async (id: string) => {
+  async (id, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get(`/films/${id}`);
-      store.dispatch(loadFilmActive(data));
+      dispatch(loadFilmActive(data));
     } catch (error) {
-      store.dispatch(redirectToRoute('*'));
+      dispatch(redirectToRoute('*'));
     }
   },
 );
 
-export const fetchRewiews = createAsyncThunk(
-  'data/fetchRewiews',
-  async (id: string) => {
+export const fetchReviews = createAsyncThunk<void, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
+  'data/fetchReviews',
+  async (id, {dispatch, extra: api}) => {
     const {data} = await api.get(`/comments/${id}`);
-    store.dispatch(loadRewiews(data));
+    dispatch(loadReviews(data));
   },
 );
 
-export const fetchSimilarFilms = createAsyncThunk(
+export const fetchSimilarFilms = createAsyncThunk<void, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'data/fetchSimilarFilms',
-  async (id: string) => {
+  async (id, {dispatch, extra: api}) => {
     const {data} = await api.get(`/films/${id}/similar`);
-    store.dispatch(loadSimilarFilms(data));
+    dispatch(loadSimilarFilms(data));
   },
 );
 
-export const changeFavoriteStatus = createAsyncThunk(
+export const changeFavoriteStatus = createAsyncThunk<void, FavoriteStatus, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'data/changeFavoriteStatus',
-  async ({id, status}: FavoriteStatus) => {
+  async ({id, status}, {dispatch, extra: api}) => {
     const {data} = await api.post(`/favorite/${id}/${status}`);
-    store.dispatch(loadFilmActive(data));
+    dispatch(loadFilmActive(data));
   },
 );
 
-export const fetchFavoriteFilms = createAsyncThunk(
+export const fetchFavoriteFilms = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
   'data/fetchFavoriteFilms',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<FilmsList>(APIRoute.Favorite);
-      store.dispatch(loadFavoriteFilms(data));
+      dispatch(loadFavoriteFilms(data));
     } catch (error) {
       errorHandle(error);
     }

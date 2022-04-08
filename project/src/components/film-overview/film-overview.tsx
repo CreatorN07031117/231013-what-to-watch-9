@@ -7,6 +7,12 @@ type FilmOverviewProps = {
 }
 
 function FilmOverview ({film}: FilmOverviewProps): JSX.Element {
+  const setStarringList = (starring: string []) => {
+    if(starring !== undefined){
+      return starring.join(', ');
+    }
+  };
+
   return (
     <React.Fragment>
       <div className="film-rating">
@@ -20,7 +26,7 @@ function FilmOverview ({film}: FilmOverviewProps): JSX.Element {
       <div className="film-card__text">
         <p>{film.description}</p>
         <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-        <p className="film-card__starring"><strong>Starring: {film.starring} and other</strong></p>
+        <p className="film-card__starring"><strong>Starring: {setStarringList(film.starring)} and other</strong></p>
       </div>
     </React.Fragment>
   );
