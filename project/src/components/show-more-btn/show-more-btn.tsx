@@ -1,17 +1,15 @@
-import {showMoreFilms} from '../../store/films-process/films-process';
-import {useAppDispatch} from '../../hooks/';
+type ShowMoreBtnProps = {
+  onClick: () => void;
+}
 
-
-function ShowMoreBtn (): JSX.Element {
-  const dispatch = useAppDispatch();
+function ShowMoreBtn ({onClick}: ShowMoreBtnProps): JSX.Element {
 
   return (
     <div className="catalog__more">
       <button
         className="catalog__button"
         type="button"
-        onClick={() =>
-          dispatch(showMoreFilms())}
+        onClick={() => onClick()}
       >
         Show more
       </button>

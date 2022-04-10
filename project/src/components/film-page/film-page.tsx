@@ -8,10 +8,10 @@ import FilmOverview from '../film-overview/film-overview';
 import FilmDetail from '../film-detail/film-detail';
 import FilmReviews from '../film-reviews/film-reviews';
 import {ScreenType, SIMILAR_FILMS, AuthorizationStatus} from '../const';
-import {useAppSelector} from '../../hooks/';
+import {useAppSelector} from '../../hooks/hooks';
 import Buttons from '../buttons/buttons';
 import {fetchFilmActive, fetchReviews, fetchSimilarFilms} from '../../store/api-actions';
-import {store} from '../../store';
+import {store} from '../../store/store';
 
 
 function FilmPage(): JSX.Element {
@@ -80,7 +80,7 @@ function FilmPage(): JSX.Element {
                     <li className={`film-nav__item ${screen === screenView && 'film-nav__item--active'}`}
                       key={screen} onClick={(evt) => handleNavChange(evt, screen as ScreenType)}
                     >
-                      <a href="/" className="film-nav__link">{title}</a>
+                      <span className="film-nav__link">{title}</span>
                     </li>
                   ))}
                 </ul>

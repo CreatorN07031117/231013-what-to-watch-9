@@ -1,5 +1,5 @@
 import {logoutAction} from '../../store/api-actions';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {Link} from 'react-router-dom';
 
 

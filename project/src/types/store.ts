@@ -1,4 +1,4 @@
-import {store} from '../store/index.js';
+import {store} from '../store/store';
 import {AuthorizationStatus} from '../components/const.js';
 import {UserData} from '../types/user-data';
 import {FilmsList, Film, Reviews} from '../types/types';
@@ -22,7 +22,6 @@ export type FilmProcess = {
 export type FilmsProcess = {
   genre: string;
   films: FilmsList;
-  count: number;
   isDataLoaded: boolean;
   promo: Film;
   favoriteFilms: FilmsList;

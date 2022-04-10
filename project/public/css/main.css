@@ -1411,7 +1411,6 @@ main {
           transform: translateY(-50%); }
 
 .loader {
-  --color: black;
   --size-mid: 6vmin;
   --size-dot: 1.5vmin;
   --size-bar: 0.4vmin;
@@ -1433,7 +1432,7 @@ main {
 }
 
 .loader-item	{
-	background: rgba(255, 255, 255, 0.1);
+  height: 100%;
 	display: grid;
 	place-items: center;
 	border-radius: 4px;

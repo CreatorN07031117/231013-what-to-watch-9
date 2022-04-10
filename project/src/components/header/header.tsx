@@ -4,7 +4,7 @@ import UserBlock from '../user-block/user-block';
 import AuthUserBlock from '../auth-user-block/auth-user-block';
 import NoAuthUserBlock from '../noauth-user-block/noauth-user-block';
 import {AuthorizationStatus} from '../const';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 
 
 function Header(): JSX.Element {

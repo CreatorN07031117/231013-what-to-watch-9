@@ -16,7 +16,7 @@ function Catalog ({filmsList}: CatalogProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {
-        filmsList.map((item) => <FilmCard key={item.id} film={item} setFilmId = {(id) => setFilmId(id)} isActive = {checkIsActive(item.id.toString())} />)
+        filmsList.map((item) => <FilmCard key={item.id} film={item} onFilmId = {(id) => setFilmId(id)} isActive = {checkIsActive(item.id.toString())} />)
       }
     </div>
   );

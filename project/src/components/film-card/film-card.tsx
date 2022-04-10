@@ -5,18 +5,18 @@ import Video from '../video/video';
 type FilmCardProps = {
   film: Film;
   isActive: boolean;
-  setFilmId : (id: string | null) => void;
+  onFilmId : (id: string | null) => void;
 }
 
-function FilmCard({film, isActive, setFilmId}: FilmCardProps): JSX.Element {
+function FilmCard({film, isActive, onFilmId}: FilmCardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter={() => {
-        setFilmId(film.id.toString());
+        onFilmId(film.id.toString());
       }}
       onMouseLeave={() => {
-        setFilmId(null);
+        onFilmId(null);
       }}
     >
       <Link to={`/films/${film.id}`}>

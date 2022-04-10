@@ -30,7 +30,7 @@ export const FILMS_PER_LOAD = 8;
 
 export const SIMILAR_FILMS = 4;
 
-export const MAX_GENRES = 9;
+export const MAX_GENRES = 10;
 
 export const MIN_REVIEW_LENGHT = 50;
 
@@ -40,7 +40,7 @@ export const BACKEND_URL = 'https://9.react.pages.academy/wtw';
 
 export const REQUEST_TIMEOUT = 5000;
 
-export enum APIRoute {
+export const enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
@@ -48,16 +48,22 @@ export enum APIRoute {
   Favorite = '/favorite',
 }
 
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+export const enum HTTPCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound= 404,
 }
 
 export const TIMEOUT_SHOW_ADD_REVIEW = 800;
 
-export enum NameSpace {
-  films = 'FILMS',
-  film = 'FILM',
-  user = 'USER'
+export const enum NameSpace {
+  Films = 'FILMS',
+  Film = 'FILM',
+  User = 'USER'
+}
+
+export const enum VideoLoadingState {
+  Unknown = 'Unknown',
+  Pending = 'Pending',
+  Done = 'Done'
 }

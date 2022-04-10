@@ -1,6 +1,6 @@
 import {useRef, FormEvent} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch} from '../../hooks/hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {toast} from 'react-toastify';
@@ -24,7 +24,7 @@ function SingIn (): JSX.Element {
 
   const notify =  ( )  =>  toast ('Login or password does not match the rules');
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if(emailRE.test(loginRef.current?.value as string) && passwordRE.test(passwordRef.current?.value as string)) {
@@ -55,7 +55,7 @@ function SingIn (): JSX.Element {
         <form
           className="sign-in__form"
           action=""
-          onSubmit={handleSubmit}
+          onSubmit={handleFormSubmit}
         >
           <div className="sign-in__fields">
             <div className="sign-in__field">

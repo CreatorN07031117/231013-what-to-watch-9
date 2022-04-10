@@ -1,4 +1,4 @@
-import {useAppDispatch, useAppSelector} from '../../hooks/';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 import {ALL_FILMS, MAX_GENRES} from '../const';
 import {selectGenre, getFilmsList} from '../../store/films-process/films-process';
 
@@ -10,9 +10,7 @@ function GenreList (): JSX.Element {
 
   const genresSet = new Set<string>([ALL_FILMS]);
   films.forEach((item) => genresSet.add(item.genre));
-  let genresList: string[] = [...genresSet];
-
-  genresList = genresList.slice(0, MAX_GENRES);
+  const genresList: string[] = [...genresSet].slice(0, MAX_GENRES);
 
   const handleClick = (item: string) => {
     dispatch(selectGenre(item));
@@ -29,7 +27,7 @@ function GenreList (): JSX.Element {
             handleClick(item);
           }}
         >
-          <a href="# " className="catalog__genres-link">{item}</a>
+          <span className="catalog__genres-link">{item}</span>
         </li>
       ))}
     </ul>

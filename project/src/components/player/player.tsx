@@ -1,6 +1,8 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/';
+import {useAppSelector} from '../../hooks/hooks';
+import {VideoLoadingState} from '../const';
+import Preloader from '../preloader/preloader';
 
 
 function Player(): JSX.Element {
@@ -13,11 +15,12 @@ function Player(): JSX.Element {
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [inRunTime, setRunTime] = useState(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(VideoLoadingState.Unknown);
 
 
   const getDuration = (second: number) => {
     if(videoRef.current !== null){
-      if(inRunTime !== null){
+      if(inRunTime !== null && isVideoLoaded === VideoLoadingState.Done){
         const hours = Math.floor(second/60/60);
         const minutes = Math.floor(second/60 - (hours*60));
         const seconds = second % 60;
@@ -31,7 +34,7 @@ function Player(): JSX.Element {
 
   useEffect(() => {
     let intervalId:  NodeJS.Timer;
-    if (isPlaying && videoRef.current !== null) {
+    if (isPlaying && videoRef.current !== null && isVideoLoaded === VideoLoadingState.Done) {
       intervalId = setInterval(() => {
         if (videoRef.current) {
           setRunTime(Math.round(videoRef.current.duration - videoRef.current.currentTime));
@@ -41,7 +44,7 @@ function Player(): JSX.Element {
     return () => {
       clearInterval(intervalId);
     };
-  }, [isPlaying]);
+  }, [isPlaying, isVideoLoaded]);
 
   const getDurationProgrees = (second: number) => videoRef.current ? Math.round((videoRef.current.duration - second)/videoRef.current.duration * 100) : 0;
 
@@ -55,9 +58,21 @@ function Player(): JSX.Element {
   const handleExit = useCallback((id) =>
     navigate(`/films/${id}`), [navigate]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if(video) {
+      video.onplay = () => setIsPlaying(true);
+      video.onpause = () => setIsPlaying(false);
+      video.onwaiting = () => setIsVideoLoaded(VideoLoadingState.Pending);
+      video.oncanplay = () => setIsVideoLoaded(VideoLoadingState.Done);
+    }
+  });
+
 
   return (
     <div className="player">
+      {(isVideoLoaded === VideoLoadingState.Pending) && <Preloader />}
       <video
         src={filmInPlayer?.videoLink}
         className="player__video"

@@ -1,8 +1,8 @@
 import {useCallback} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../const';
-import {useAppSelector} from '../../hooks/';
-import {store} from '../../store/index';
+import {useAppSelector} from '../../hooks/hooks';
+import {store} from '../../store/store';
 import {changeFavoriteStatus} from '../../store/api-actions';
 
 

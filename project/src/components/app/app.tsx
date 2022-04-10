@@ -9,7 +9,7 @@ import PrivateRoute from '../private-route/private-route';
 import Player from '../player/player';
 import Preloader from '../preloader/preloader';
 import {AuthorizationStatus} from '../const';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 
 
 function App (): JSX.Element {

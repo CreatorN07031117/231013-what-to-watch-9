@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import MainCatalog from '../main-catalog/main-catalog';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/hooks';
 import Buttons from '../buttons/buttons';
 
 

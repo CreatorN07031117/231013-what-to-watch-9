@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace, ALL_FILMS, FILMS_PER_LOAD} from '../../components/const';
+import {NameSpace, ALL_FILMS} from '../../components/const';
 import {FilmsProcess} from '../../types/store';
 import {FilmsList, Film} from '../../types/types';
 
@@ -7,25 +7,20 @@ import {FilmsList, Film} from '../../types/types';
 const initialState: FilmsProcess = {
   genre: ALL_FILMS,
   films: [] as FilmsList,
-  count: FILMS_PER_LOAD,
   isDataLoaded: false,
   promo: {} as Film,
   favoriteFilms: [] as FilmsList,
 };
 
 export const filmsProcess = createSlice({
-  name: NameSpace.films,
+  name: NameSpace.Films,
   initialState,
   reducers: {
     selectGenre: (state, action) => {
       state.genre = action.payload;
-      state.count = FILMS_PER_LOAD;
     },
     getFilmsList: (state) => {
       ({films: state.films} = state);
-    },
-    showMoreFilms: (state) => {
-      state.count = state.count + FILMS_PER_LOAD;
     },
     loadFilms: (state, action) => {
       state.films = action.payload;
@@ -43,4 +38,4 @@ export const filmsProcess = createSlice({
   },
 });
 
-export const {selectGenre, getFilmsList, showMoreFilms, loadFilms, getPromo, loadPromo, loadFavoriteFilms} = filmsProcess.actions;
+export const {selectGenre, getFilmsList, loadFilms, getPromo, loadPromo, loadFavoriteFilms} = filmsProcess.actions;
